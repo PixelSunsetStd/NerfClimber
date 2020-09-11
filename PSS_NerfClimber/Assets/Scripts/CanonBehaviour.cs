@@ -60,6 +60,7 @@ public class CanonBehaviour : MonoBehaviour
             }
             else
             {
+                GetComponent<Animator>().enabled = false;
                 if (_superPower == 1)
                 {
                     StartCoroutine("SuperCanon");
@@ -75,6 +76,7 @@ public class CanonBehaviour : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
 
         _isSuper = false;
+        GetComponent<Animator>().enabled = true;
         SpitBall();
     }
 

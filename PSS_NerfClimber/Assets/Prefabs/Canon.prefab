@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 1021476129752796949}
   m_Layer: 0
   m_Name: Canon
-  m_TagString: Untagged
+  m_TagString: Canon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 4284656573636495740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 916912497814016770}
   - {fileID: 4284656572231825674}
@@ -323,6 +323,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 0}
+  _isControlable: 1
+  _isSuper: 0
+  _superPower: 1
   _hasBall: 0
   _feedback: {fileID: 920002613}
   _shooter: {fileID: 4284656573092194418}

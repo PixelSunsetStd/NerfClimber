@@ -33,10 +33,5 @@ public class BallBehaviour : MonoBehaviour
                 _combo = 0;
                 break;
         }
-
-        if (collision.collider.CompareTag("Obstacle"))
-        {
-            
-        }
     }
 }
