@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public int _numberOfLives;
+
+    public int _score;
     
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour
         if (_activeCanon != null)
         {
             _prevCanon = _activeCanon;
+            _prevCanon._givePoints = true;
             _activeCanon.SpitBall();
         }
     }
@@ -59,6 +62,8 @@ public class GameManager : MonoBehaviour
         if (_numberOfLives > 0)
         {
             _ball.transform.position = _prevCanon.transform.position;
+            //_ball.GetComponent<BallBehaviour>()._gi
+            _prevCanon._givePoints = false;
             _ball.gameObject.SetActive(true);
             transform.position = new Vector3(0, _prevCanon.transform.position.y + 5, -10);
         }
