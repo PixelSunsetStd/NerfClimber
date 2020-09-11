@@ -23,18 +23,17 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (GetComponent<AudioSource>().enabled)
-            GetComponent<AudioSource>().Play();
-
         switch (collision.collider.tag)
         {
             case "Obstacle":
+                if (GetComponent<AudioSource>().enabled)
+                    GetComponent<AudioSource>().Play();
                 _combo++;
                 break;
 
             case "Canon":
                 _combo = 0;
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
                 break;
         }
     }

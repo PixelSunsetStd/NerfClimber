@@ -333,6 +333,19 @@ MonoBehaviour:
   _sndCatch: {fileID: 8300000, guid: 9f34f63db4958f842b8b570514dfb47e, type: 3}
   _sndSpit: {fileID: 8300000, guid: cc57114cc7ecc144a86f905393385c8c, type: 3}
   _randomPos: 1
+  _rewardFX: {fileID: 0}
+  _rewardText:
+  - 
+  - Cool!
+  - Nice!
+  - Great!
+  - Splendid!
+  - Wonderful!
+  - Fabulous!
+  - Amazing!
+  - Extraordinary!
+  - Impresive!
+  - Marvelous!
 --- !u!65 &4284656573636495737
 BoxCollider:
   m_ObjectHideFlags: 0
