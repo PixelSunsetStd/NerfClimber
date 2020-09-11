@@ -7,6 +7,7 @@ public class CanonBehaviour : MonoBehaviour
 {
     public GameManager _gameManager;
 
+    public bool _givePoints;
     public bool _isControlable = true;
 
     public bool _isSuper;
@@ -47,9 +48,11 @@ public class CanonBehaviour : MonoBehaviour
         //transform.rotation = Quaternion.Euler(0f, 0f, Mathf.PingPong(_degreesPerSec * Time.time, 180));
     }
 
-    void SetTextFX (int index)
+    void SetTextFX (int value)
     {
-        _textFX.text = _rewardText[index];
+        int scoreToAdd = (value+1) * 5;
+        _textFX.text = "+" + scoreToAdd.ToString();//_rewardText[index];
+        _gameManager._score += scoreToAdd;
     }
 
     public void SpitBall()
@@ -107,10 +110,18 @@ public class CanonBehaviour : MonoBehaviour
             _feedback.SetActive(true);
 
             _textFX.transform.position = other.transform.position;
-            SetTextFX(other.GetComponent<BallBehaviour>()._combo);
-            _textFX.GetComponent<ParticleSystem>().Play();
+            if (_givePoints)
+            {
+                SetTextFX(other.GetComponent<BallBehaviour>()._combo);
+                _textFX.GetComponent<ParticleSystem>().Play();
+            }
 
             other.GetComponent<BallBehaviour>()._combo = 0;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        _givePoints = true;
     }
 }
