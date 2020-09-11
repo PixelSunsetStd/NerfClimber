@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CanonBehaviour : MonoBehaviour
@@ -29,6 +30,8 @@ public class CanonBehaviour : MonoBehaviour
     public ParticleSystem _rewardFX;
     public string[] _rewardText;
     TextMeshPro _textFX;
+
+    public Slider _powerSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -80,19 +83,47 @@ public class CanonBehaviour : MonoBehaviour
                 {
                     StartCoroutine("SuperCanon");
                 }
-                _superPower += 0.1f;
-                transform.localScale = new Vector3(_superPower + .25f, _superPower + .25f, _superPower + .25f);
+                if (_powerSlider.value < _powerSlider.maxValue)
+                {
+                    _superPower += 0.1f;
+                    transform.localScale = new Vector3(_superPower + .25f, _superPower + .25f, _superPower + .25f);
+                    _powerSlider.value = _superPower; 
+                }
+
+                if (_powerSlider.value == _powerSlider.maxValue)
+                {
+                    StopCoroutine("SuperCanon");
+                    StopCoroutine("DecreasePower");
+                    _isSuper = false;
+                    GetComponent<Animator>().enabled = true;
+                    SpitBall();
+                }
             }
         }
     }
 
     IEnumerator SuperCanon()
     {
+        StartCoroutine("DecreasePower");
+
         yield return new WaitForSeconds(3.0f);
 
         _isSuper = false;
         GetComponent<Animator>().enabled = true;
         SpitBall();
+    }
+
+    IEnumerator DecreasePower()
+    {
+        Debug.Log("StartDecrease");
+        while (_superPower >= 1f)
+        {
+            yield return new WaitForSeconds(0.5f);
+            _powerSlider.value -= 0.1f;
+            _superPower = _powerSlider.value;
+            transform.localScale = new Vector3(_superPower + .25f, _superPower + .25f, _superPower + .25f);
+
+        }
     }
 
     private void OnTriggerEnter(Collider other)
