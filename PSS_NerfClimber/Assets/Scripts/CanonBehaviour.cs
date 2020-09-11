@@ -6,6 +6,11 @@ public class CanonBehaviour : MonoBehaviour
 {
     public GameManager _gameManager;
 
+    public bool _isControlable = true;
+
+    public bool _isSuper;
+    public float _superPower = 1;
+
     public bool _hasBall;
     public GameObject _feedback;
 
@@ -39,18 +44,38 @@ public class CanonBehaviour : MonoBehaviour
     {
         if (_hasBall)
         {
-            _ball.transform.position = _shooter.position;
-            _ball.SetActive(true);
-            _ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            _ball.GetComponent<Rigidbody>().AddForce(transform.right * 15f, ForceMode.Impulse);
-            _ball = null;
-            GetComponent<Animator>().SetTrigger("Spit");
-            _hasBall = false;
-            _gameManager._activeCanon = null;
-            GetComponent<AudioSource>().clip = _sndSpit;
-            GetComponent<AudioSource>().Play();
-            _feedback.SetActive(false);
+            if (!_isSuper)
+            {
+                _ball.transform.position = _shooter.position;
+                _ball.SetActive(true);
+                _ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                _ball.GetComponent<Rigidbody>().AddForce(transform.right * 15f * _superPower, ForceMode.Impulse);
+                _ball = null;
+                GetComponent<Animator>().SetTrigger("Spit");
+                _hasBall = false;
+                _gameManager._activeCanon = null;
+                GetComponent<AudioSource>().clip = _sndSpit;
+                GetComponent<AudioSource>().Play();
+                _feedback.SetActive(false);
+            }
+            else
+            {
+                if (_superPower == 1)
+                {
+                    StartCoroutine("SuperCanon");
+                }
+                _superPower += 0.1f;
+                transform.localScale = new Vector3(_superPower, _superPower, _superPower);
+            }
         }
+    }
+
+    IEnumerator SuperCanon()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        _isSuper = false;
+        SpitBall();
     }
 
     private void OnTriggerEnter(Collider other)

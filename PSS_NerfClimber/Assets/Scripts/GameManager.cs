@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour
     {
         if (_activeCanon != null)
         {
-            _activeCanon.transform.rotation = Quaternion.Euler(_activeCanon.transform.rotation.x, _activeCanon.transform.rotation.y, _rotSlider.value);
+            if (_activeCanon._isControlable)
+                _activeCanon.transform.rotation = Quaternion.Euler(_activeCanon.transform.rotation.x, _activeCanon.transform.rotation.y, _rotSlider.value);
         }
     }
 

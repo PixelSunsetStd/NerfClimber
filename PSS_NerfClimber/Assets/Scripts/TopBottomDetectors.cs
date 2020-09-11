@@ -33,8 +33,8 @@ public class TopBottomDetectors : MonoBehaviour
             if (_isFinish)
             {
                 Debug.Log("WIN !");
-                other.transform.position = transform.position;
-                other.gameObject.SetActive(false);
+                //other.transform.position = transform.position;
+                //other.gameObject.SetActive(false);
                 //_winFX.transform.position = other.transform.position;
                 _winFX.gameObject.SetActive(true);
                 GetComponent<AudioSource>().Play();

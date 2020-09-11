@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y - _offset < _target.position.y && transform.position.y - _offset <= 45)
+        if (transform.position.y - _offset < _target.position.y)// && transform.position.y - _offset <= 45)
         {
             transform.position = new Vector3(transform.position.x, _target.position.y + _offset, transform.position.z);
         }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
+    public int _combo;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +22,21 @@ public class BallBehaviour : MonoBehaviour
     {
         if (GetComponent<AudioSource>().enabled)
             GetComponent<AudioSource>().Play();
+
+        switch (collision.collider.tag)
+        {
+            case "Obstacle":
+                _combo++;
+                break;
+
+            case "Canon":
+                _combo = 0;
+                break;
+        }
+
+        if (collision.collider.CompareTag("Obstacle"))
+        {
+            
+        }
     }
 }
