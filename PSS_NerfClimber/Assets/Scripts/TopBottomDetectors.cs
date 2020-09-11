@@ -59,7 +59,10 @@ public class TopBottomDetectors : MonoBehaviour
                 {
                     if (_gameManager._numberOfLives > 1)
                     {
-                        _gameManager._numberOfLives--;
+                        if (_gameManager._meter >= 10)
+                        {
+                            _gameManager._numberOfLives--;
+                        }
                         _nextBallPanel.SetActive(true);
                     }
                     else
