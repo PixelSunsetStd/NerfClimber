@@ -333,6 +333,18 @@ MonoBehaviour:
   _sndCatch: {fileID: 8300000, guid: 9f34f63db4958f842b8b570514dfb47e, type: 3}
   _sndSpit: {fileID: 8300000, guid: cc57114cc7ecc144a86f905393385c8c, type: 3}
   _randomPos: 0
+  _rewardFX: {fileID: 0}
+  _rewardText:
+  - Cool!
+  - Nice!
+  - Great!
+  - Splendid!
+  - Wonderful!
+  - Fabulous!
+  - Amazing!
+  - Extraordinary!
+  - Impresive!
+  - Marvelous!
 --- !u!65 &4284656573636495737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -488,7 +500,7 @@ GameObject:
   - component: {fileID: 3788830241206559205}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Canon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,7 +575,7 @@ SphereCollider:
   m_GameObject: {fileID: 7552558599266769977}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

@@ -9,10 +9,14 @@ public class TopBottomDetectors : MonoBehaviour
 
     public bool _isFinish;
 
+    public bool _isPlayerDone;
+
     public ParticleSystem _winFX;
     public GameObject _nextBallPanel;
     public GameObject _victoryPanel;
     public GameObject _gameOverPanel;
+
+    public TopBottomDetectors _otherTrigger;
     
     // Start is called before the first frame update
     void Start()
@@ -38,21 +42,32 @@ public class TopBottomDetectors : MonoBehaviour
                 //_winFX.transform.position = other.transform.position;
                 _winFX.gameObject.SetActive(true);
                 GetComponent<AudioSource>().Play();
-                _victoryPanel.SetActive(true);
+                //_victoryPanel.SetActive(true);
+                _otherTrigger._isPlayerDone = true;
             }
             else
             {
                 other.gameObject.SetActive(false);
+                other.GetComponent<BallBehaviour>()._combo = 0;
 
-                if (_gameManager._numberOfLives > 1)
+                if (_isPlayerDone)
                 {
-                    _gameManager._numberOfLives--;
-                    _nextBallPanel.SetActive(true);
+                    _victoryPanel.SetActive(true);
+                    return;
                 }
                 else
                 {
-                    _gameOverPanel.SetActive(true);
+                    if (_gameManager._numberOfLives > 1)
+                    {
+                        _gameManager._numberOfLives--;
+                        _nextBallPanel.SetActive(true);
+                    }
+                    else
+                    {
+                        _gameOverPanel.SetActive(true);
+                    }
                 }
+
 
                 
                 //SceneManager.LoadScene(0);

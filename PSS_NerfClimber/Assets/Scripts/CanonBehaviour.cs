@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CanonBehaviour : MonoBehaviour
 {
@@ -24,11 +25,17 @@ public class CanonBehaviour : MonoBehaviour
 
     public bool _randomPos;
 
+    public ParticleSystem _rewardFX;
+    public string[] _rewardText;
+    TextMeshPro _textFX;
+
     // Start is called before the first frame update
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
         _degreesPerSec = Random.Range(90f, 180f);
+
+        _textFX = _rewardFX.GetComponent<TextMeshPro>();
 
         if (_randomPos)
             transform.position = new Vector3(Random.Range(-5f, 5f), transform.position.y, transform.position.z);
@@ -38,6 +45,11 @@ public class CanonBehaviour : MonoBehaviour
     void Update()
     {
         //transform.rotation = Quaternion.Euler(0f, 0f, Mathf.PingPong(_degreesPerSec * Time.time, 180));
+    }
+
+    void SetTextFX (int index)
+    {
+        _textFX.text = _rewardText[index];
     }
 
     public void SpitBall()
@@ -66,7 +78,7 @@ public class CanonBehaviour : MonoBehaviour
                     StartCoroutine("SuperCanon");
                 }
                 _superPower += 0.1f;
-                transform.localScale = new Vector3(_superPower, _superPower, _superPower);
+                transform.localScale = new Vector3(_superPower + .25f, _superPower + .25f, _superPower + .25f);
             }
         }
     }
@@ -93,6 +105,12 @@ public class CanonBehaviour : MonoBehaviour
             GetComponent<AudioSource>().clip = _sndCatch;
             GetComponent<AudioSource>().Play();
             _feedback.SetActive(true);
+
+            _textFX.transform.position = other.transform.position;
+            SetTextFX(other.GetComponent<BallBehaviour>()._combo);
+            _textFX.GetComponent<ParticleSystem>().Play();
+
+            other.GetComponent<BallBehaviour>()._combo = 0;
         }
     }
 }
