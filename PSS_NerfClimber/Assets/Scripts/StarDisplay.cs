@@ -13,8 +13,13 @@ public class StarDisplay : MonoBehaviour
         _gamemanager = FindObjectOfType<GameManager>();
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(StartAnim());
+    }
+
     // Start is called before the first frame update
-    IEnumerator Start()
+    IEnumerator StartAnim()
     {
         for (int i = 0; i < _gamemanager._numberOfLives; i++)
         {

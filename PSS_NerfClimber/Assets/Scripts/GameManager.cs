@@ -22,11 +22,14 @@ public class GameManager : MonoBehaviour
     public int _score;
 
     public ParticleSystem _rewardTextFX;
+
+    public List<GameObject> _levels;
+    public int _levelIndex;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _levels[_levelIndex].SetActive(true);
     }
 
     // Update is called once per frame
@@ -77,4 +80,39 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void RestartLevel()
+    {
+        _numberOfLives = 3;
+        _meter = 0;
+        _ball.transform.position = Vector3.zero;
+        _ball.GetComponent<MeshRenderer>().enabled = true;
+        Camera.main.GetComponent<CameraFollow>()._offset = 5;
+        Camera.main.GetComponent<CameraFollow>().SetPosition();
+        _ball.gameObject.SetActive(true);
+    }
+
+    public void NextLevel()
+    {
+        if (_levelIndex < _levels.Count - 1)
+        {
+            _levelIndex++;
+        }
+        else _levelIndex = 0;
+
+        _levels[_levelIndex].gameObject.SetActive(true);
+
+        _numberOfLives = 3;
+        _meter = 0;
+        _ball.GetComponent<BallBehaviour>()._levelCompleted = false;
+        _ball.GetComponent<BallBehaviour>()._rewardedFx = false;
+        _ball.GetComponent<BallBehaviour>()._planet.SetActive(false);
+        _ball.GetComponent<BallBehaviour>()._winFX.gameObject.SetActive(false);
+        _ball.transform.position = Vector3.zero;
+        _ball.GetComponent<MeshRenderer>().enabled = true;
+        Camera.main.GetComponent<CameraFollow>()._offset = 5;
+        Camera.main.GetComponent<CameraFollow>().SetPosition();
+        _ball.gameObject.SetActive(true);
+    }
+
 }

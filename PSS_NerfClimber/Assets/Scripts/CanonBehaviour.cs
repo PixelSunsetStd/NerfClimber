@@ -33,14 +33,20 @@ public class CanonBehaviour : MonoBehaviour
 
     public Slider _powerSlider;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
         _rewardFX = _gameManager._rewardTextFX;
+        _textFX = _rewardFX.GetComponent<TextMeshPro>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+        
         _degreesPerSec = Random.Range(90f, 180f);
 
-        _textFX = _rewardFX.GetComponent<TextMeshPro>();
 
         if (_randomPos)
             transform.position = new Vector3(Random.Range(-5f, 5f), transform.position.y, transform.position.z);
@@ -105,7 +111,7 @@ public class CanonBehaviour : MonoBehaviour
 
     IEnumerator SuperCanon()
     {
-        StartCoroutine("DecreasePower");
+        //StartCoroutine("DecreasePower");
 
         yield return new WaitForSeconds(3.0f);
 

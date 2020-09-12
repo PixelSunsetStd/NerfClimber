@@ -41,13 +41,16 @@ public class TopBottomDetectors : MonoBehaviour
                 //other.gameObject.SetActive(false);
                 //_winFX.transform.position = other.transform.position;
                 //_winFX.gameObject.SetActive(true);
-                GetComponent<AudioSource>().Play();
+                //GetComponent<AudioSource>().Play();
                 //_victoryPanel.SetActive(true);
+                //Camera.main.GetComponent<AudioSource>().Play();
                 _otherTrigger._isPlayerDone = true;
                 other.GetComponent<BallBehaviour>()._levelCompleted = true;
+                other.GetComponent<BallBehaviour>()._audioSources[1].Play();
                 other.GetComponent<Rigidbody>().useGravity = true;
                 GetComponent<Collider>().enabled = false;
                 Camera.main.GetComponent<CameraFollow>()._offset = 0;
+                _gameManager._levels[_gameManager._levelIndex].SetActive(false);
             }
             else
             {
@@ -57,6 +60,7 @@ public class TopBottomDetectors : MonoBehaviour
                 if (_isPlayerDone)
                 {
                     _victoryPanel.SetActive(true);
+                    _isPlayerDone = false;
                     //StartCoroutine(OpenVictoryPanel());
                     return;
                 }
@@ -75,10 +79,6 @@ public class TopBottomDetectors : MonoBehaviour
                         _gameOverPanel.SetActive(true);
                     }
                 }
-
-
-                
-                //SceneManager.LoadScene(0);
             }
         }
     }

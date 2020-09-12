@@ -11,9 +11,11 @@ public class BallBehaviour : MonoBehaviour
     public GameObject _planet;
     Animator _planetAnimator;
 
-    bool _rewardedFx;
+    public bool _rewardedFx;
 
     Rigidbody _rb;
+
+    public AudioSource[] _audioSources;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,7 @@ public class BallBehaviour : MonoBehaviour
             if (_rb.velocity.y <= 0)
             {
                 _winFX.transform.parent = null;
-                _winFX.transform.position = transform.position;
+                _winFX.transform.position = new Vector3(0, transform.position.y, 0);
                 _winFX.gameObject.SetActive(true);
                 _planet.transform.position = new Vector3(0, transform.position.y, 12);
                 _planet.SetActive(true);
@@ -51,8 +53,8 @@ public class BallBehaviour : MonoBehaviour
         switch (collision.collider.tag)
         {
             case "Obstacle":
-                if (GetComponent<AudioSource>().enabled)
-                    GetComponent<AudioSource>().Play();
+                if (_audioSources[0].enabled)// GetComponent<AudioSource>().enabled)
+                    _audioSources[0].Play();
                 _combo++;
                 break;
 
