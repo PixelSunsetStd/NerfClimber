@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public int _numberOfLives;
 
     public int _score;
+
+    public ParticleSystem _rewardTextFX;
     
     // Start is called before the first frame update
     void Start()
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
         if (_numberOfLives > 0)
         {
             _ball.transform.position = _prevCanon.transform.position;
+            Camera.main.GetComponent<CameraFollow>().SetPosition();
             //_ball.GetComponent<BallBehaviour>()._gi
             _prevCanon._givePoints = false;
             _ball.gameObject.SetActive(true);

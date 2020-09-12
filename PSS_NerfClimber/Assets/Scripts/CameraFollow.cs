@@ -27,9 +27,10 @@ public class CameraFollow : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 5, transform.position.z);
         }
-        
-        //if (_target.position.y <= 40 && _target.position.y <= transform.position.y)
-        //    transform.position = new Vector3(transform.position.x, _target.position.y + 5, transform.position.z);
-        //else transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+    }
+
+    public void SetPosition()
+    {
+        transform.position = new Vector3(transform.position.x, _target.position.y + _offset, transform.position.z);
     }
 }

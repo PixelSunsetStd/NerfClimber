@@ -27,7 +27,7 @@ public class CanonBehaviour : MonoBehaviour
 
     public bool _randomPos;
 
-    public ParticleSystem _rewardFX;
+    ParticleSystem _rewardFX;
     public string[] _rewardText;
     TextMeshPro _textFX;
 
@@ -37,6 +37,7 @@ public class CanonBehaviour : MonoBehaviour
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
+        _rewardFX = _gameManager._rewardTextFX;
         _degreesPerSec = Random.Range(90f, 180f);
 
         _textFX = _rewardFX.GetComponent<TextMeshPro>();
@@ -130,6 +131,7 @@ public class CanonBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Camera.main.GetComponent<CameraFollow>().SetPosition();
             _ball = other.gameObject;
             _ball.transform.position = transform.position;
             _ball.SetActive(false);

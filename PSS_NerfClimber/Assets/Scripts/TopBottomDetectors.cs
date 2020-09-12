@@ -11,7 +11,7 @@ public class TopBottomDetectors : MonoBehaviour
 
     public bool _isPlayerDone;
 
-    public ParticleSystem _winFX;
+    //public ParticleSystem _winFX;
     public GameObject _nextBallPanel;
     public GameObject _victoryPanel;
     public GameObject _gameOverPanel;
@@ -45,7 +45,9 @@ public class TopBottomDetectors : MonoBehaviour
                 //_victoryPanel.SetActive(true);
                 _otherTrigger._isPlayerDone = true;
                 other.GetComponent<BallBehaviour>()._levelCompleted = true;
+                other.GetComponent<Rigidbody>().useGravity = true;
                 GetComponent<Collider>().enabled = false;
+                Camera.main.GetComponent<CameraFollow>()._offset = 0;
             }
             else
             {

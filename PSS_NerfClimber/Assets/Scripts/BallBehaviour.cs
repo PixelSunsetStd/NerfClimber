@@ -8,6 +8,8 @@ public class BallBehaviour : MonoBehaviour
     public bool _levelCompleted;
 
     public ParticleSystem _winFX;
+    public GameObject _planet;
+    Animator _planetAnimator;
 
     bool _rewardedFx;
 
@@ -18,6 +20,9 @@ public class BallBehaviour : MonoBehaviour
     {
         _rewardedFx = false;
         _rb = GetComponent<Rigidbody>();
+        GetComponent<MeshRenderer>().enabled = true;
+
+        _planetAnimator = _planet.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -30,7 +35,11 @@ public class BallBehaviour : MonoBehaviour
                 _winFX.transform.parent = null;
                 _winFX.transform.position = transform.position;
                 _winFX.gameObject.SetActive(true);
+                _planet.transform.position = new Vector3(0, transform.position.y, 12);
+                _planet.SetActive(true);
+                _planetAnimator.SetTrigger("Activate");
                 _rewardedFx = true;
+                GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
