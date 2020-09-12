@@ -17,6 +17,8 @@ public class BallBehaviour : MonoBehaviour
 
     public AudioSource[] _audioSources;
 
+    public ParticleSystem _splatFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,8 @@ public class BallBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(_rb.velocity, Vector3.up), Time.deltaTime * 360f);
+
         if (_levelCompleted && !_rewardedFx)
         {
             if (_rb.velocity.y <= 0)
@@ -46,6 +50,11 @@ public class BallBehaviour : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
+
 
 
     private void OnCollisionEnter(Collision collision)
@@ -55,6 +64,7 @@ public class BallBehaviour : MonoBehaviour
             case "Obstacle":
                 if (_audioSources[0].enabled)// GetComponent<AudioSource>().enabled)
                     _audioSources[0].Play();
+                _splatFX.Play();
                 _combo++;
                 break;
 
