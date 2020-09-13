@@ -33,11 +33,11 @@ public class BallBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.rotation = Quaternion.LookRotation(_rb.velocity, Vector3.up);//Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(_rb.velocity, Vector3.up), Time.deltaTime * 360f);
+        transform.rotation = Quaternion.LookRotation(_rb.velocity, transform.up);//Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(_rb.velocity, Vector3.up), Time.deltaTime * 360f);
         //if (_rb.velocity.y >= 0)
-            transform.localScale = new Vector3(.5f - (Mathf.Abs(_rb.velocity.y) / 100.0f), .5f - (Mathf.Abs(_rb.velocity.y) / 100.0f), .5f + (Mathf.Abs(_rb.velocity.y) / 100.0f));
+        transform.localScale = new Vector3(.5f - (Mathf.Abs(_rb.velocity.y) / 100.0f), .5f - (Mathf.Abs(_rb.velocity.y) / 100.0f), .5f + (Mathf.Abs(_rb.velocity.y) / 100.0f));
         //else {
             //transform.localScale = new Vector3(.5f, .5f + (_rb.velocity.y / 100.0f), .5f);
         //}
@@ -58,13 +58,6 @@ public class BallBehaviour : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
-
-
     private void OnCollisionEnter(Collision collision)
     {
         switch (collision.collider.tag)
@@ -82,20 +75,4 @@ public class BallBehaviour : MonoBehaviour
                 break;
         }
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (GetComponent<AudioSource>().enabled)
-            GetComponent<AudioSource>().Play();
-
-        switch (other.tag)
-        {
-            case "Canon":
-                _textFX.transform.position = other.transform.position;
-                _textFX.GetComponent<ParticleSystem>().Play();
-                _combo = 0;
-                gameObject.SetActive(false);
-                break;
-        }
-    }*/
 }
