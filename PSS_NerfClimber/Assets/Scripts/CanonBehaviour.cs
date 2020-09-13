@@ -82,6 +82,7 @@ public class CanonBehaviour : MonoBehaviour
                 GetComponent<AudioSource>().clip = _sndSpit;
                 GetComponent<AudioSource>().Play();
                 _feedback.SetActive(false);
+                _shooter.GetComponentInChildren<ParticleSystem>().Play();
             }
             else
             {
