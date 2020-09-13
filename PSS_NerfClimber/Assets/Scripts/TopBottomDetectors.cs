@@ -30,6 +30,11 @@ public class TopBottomDetectors : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        GetComponent<Collider>().enabled = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -81,12 +86,5 @@ public class TopBottomDetectors : MonoBehaviour
                 }
             }
         }
-    }
-
-    IEnumerator OpenVictoryPanel()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        _victoryPanel.SetActive(true);
     }
 }

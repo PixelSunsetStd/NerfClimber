@@ -82,7 +82,6 @@ public class CanonBehaviour : MonoBehaviour
                 GetComponent<AudioSource>().clip = _sndSpit;
                 GetComponent<AudioSource>().Play();
                 _feedback.SetActive(false);
-                _shooter.GetComponentInChildren<ParticleSystem>().Play();
             }
             else
             {
@@ -119,6 +118,7 @@ public class CanonBehaviour : MonoBehaviour
         _isSuper = false;
         GetComponent<Animator>().enabled = true;
         SpitBall();
+        _isSuper = true;
     }
 
     IEnumerator DecreasePower()
@@ -138,6 +138,12 @@ public class CanonBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (_isSuper)
+            {
+                _powerSlider.value = _powerSlider.minValue;
+                _superPower = _powerSlider.value;
+            }
+
             Camera.main.GetComponent<CameraFollow>().SetPosition();
             _ball = other.gameObject;
             _ball.transform.position = transform.position;

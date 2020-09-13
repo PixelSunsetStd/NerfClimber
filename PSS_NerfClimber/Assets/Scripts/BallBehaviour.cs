@@ -36,11 +36,10 @@ public class BallBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         transform.rotation = Quaternion.LookRotation(_rb.velocity, transform.up);//Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(_rb.velocity, Vector3.up), Time.deltaTime * 360f);
-        //if (_rb.velocity.y >= 0)
+
         transform.localScale = new Vector3(.5f - (Mathf.Abs(_rb.velocity.y) / 100.0f), .5f - (Mathf.Abs(_rb.velocity.y) / 100.0f), .5f + (Mathf.Abs(_rb.velocity.y) / 100.0f));
-        //else {
-            //transform.localScale = new Vector3(.5f, .5f + (_rb.velocity.y / 100.0f), .5f);
-        //}
+
+
         if (_levelCompleted && !_rewardedFx)
         {
             if (_rb.velocity.y <= 0)
