@@ -8,6 +8,8 @@ public class CanonBehaviour : MonoBehaviour
 {
     public GameManager _gameManager;
 
+    public CanonController _canonController;
+
     public bool _givePoints;
     public bool _isControlable = true;
 
@@ -63,7 +65,7 @@ public class CanonBehaviour : MonoBehaviour
         _gameManager._score += scoreToAdd;
     }
 
-    public void SpitBall()
+    public void SpitBall(float power)
     {
         if (_hasBall)
         {
@@ -72,10 +74,11 @@ public class CanonBehaviour : MonoBehaviour
                 _ball.transform.position = _shooter.position;
                 _ball.SetActive(true);
                 _ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                _ball.GetComponent<Rigidbody>().AddForce(_shooter.right * 30f * _superPower, ForceMode.Impulse);
+                _ball.GetComponent<Rigidbody>().AddForce(_shooter.forward * power * _superPower, ForceMode.Impulse);
                 _ball = null;
                 GetComponent<Animator>().SetTrigger("Spit");
                 _hasBall = false;
+                _gameManager._prevCanon = _gameManager._activeCanon;
                 _gameManager._activeCanon = null;
                 GetComponent<AudioSource>().clip = _sndSpit;
                 GetComponent<AudioSource>().Play();
@@ -101,7 +104,7 @@ public class CanonBehaviour : MonoBehaviour
                     StopCoroutine("DecreasePower");
                     _isSuper = false;
                     GetComponent<Animator>().enabled = true;
-                    SpitBall();
+                    SpitBall(15f);
                 }
             }
         }
@@ -115,7 +118,7 @@ public class CanonBehaviour : MonoBehaviour
 
         _isSuper = false;
         GetComponent<Animator>().enabled = true;
-        SpitBall();
+        SpitBall(15f);
         _isSuper = true;
     }
 
@@ -145,6 +148,7 @@ public class CanonBehaviour : MonoBehaviour
             Camera.main.GetComponent<CameraFollow>().SetPosition();
             _ball = other.gameObject;
             _ball.transform.position = transform.position;
+            _canonController.transform.position = transform.position;
             _ball.SetActive(false);
             _hasBall = true;
             GetComponent<Animator>().SetTrigger("Catch");

@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         if (_activeCanon != null)
         {
             if (_activeCanon._isControlable)
-                _activeCanon.transform.rotation = Quaternion.Euler(_activeCanon.transform.rotation.x, -_rotSlider.value, _activeCanon.transform.rotation.z);
+                _activeCanon.transform.rotation = Quaternion.Euler(_activeCanon.transform.rotation.x, _activeCanon.transform.rotation.y, _rotSlider.value);
         }
     }
 
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         {
             _prevCanon = _activeCanon;
             _prevCanon._givePoints = true;
-            _activeCanon.SpitBall();
+            //_activeCanon.SpitBall();
         }
     }
 

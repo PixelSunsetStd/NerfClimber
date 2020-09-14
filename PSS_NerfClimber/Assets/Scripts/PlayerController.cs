@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool _isNPC;
     //public GameManager _gameManager;
     public Slider _rotSlider;
 
     public float _moveSpeed;
 
-    public static bool _isMoving;
+    public bool _isMoving;
     public Rigidbody _rb;
 
     public GameObject _bullet;
@@ -24,11 +25,29 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
+    {
+        if (Input.GetMouseButton(0) && !_isNPC)
+            Fire();
+
+        
+    }
+
+    private void FixedUpdate()
     {
         if (_isMoving) MoveForward();
 
-        if (Input.GetMouseButton(0)) Fire();
+        if (_isNPC)
+        {
+            Ray ray = new Ray(transform.position + transform.up, transform.forward);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, 3.0f, ~9))
+            {
+                _isMoving = false;
+                Fire();
+            }
+            else _isMoving = true;
+        }
     }
 
     public void SetRotation()
@@ -53,11 +72,8 @@ public class PlayerController : MonoBehaviour
 
     public void Fire()
     {
-        if (Input.GetMouseButton(0))
-        {
-            GameObject bullet = Instantiate(_bullet, transform.position + transform.up + transform.forward * 2, Quaternion.identity);
-            bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 15f, ForceMode.Impulse);
-            //Destroy(_bullet, 1.0f);
-        }
+        GameObject bullet = Instantiate(_bullet, transform.position + transform.up + transform.forward * 2, Quaternion.identity);
+        bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 15f, ForceMode.Impulse);
+            
     }
 }
