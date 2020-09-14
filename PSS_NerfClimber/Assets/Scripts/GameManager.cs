@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _levels[_levelIndex].SetActive(true);
+        //_levels[_levelIndex].SetActive(true);
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         if (_activeCanon != null)
         {
             if (_activeCanon._isControlable)
-                _activeCanon.transform.rotation = Quaternion.Euler(_activeCanon.transform.rotation.x, _activeCanon.transform.rotation.y, _rotSlider.value);
+                _activeCanon.transform.rotation = Quaternion.Euler(_activeCanon.transform.rotation.x, -_rotSlider.value, _activeCanon.transform.rotation.z);
         }
     }
 

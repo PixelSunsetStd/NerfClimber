@@ -43,8 +43,6 @@ public class CanonBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
         _degreesPerSec = Random.Range(90f, 180f);
 
 
@@ -74,7 +72,7 @@ public class CanonBehaviour : MonoBehaviour
                 _ball.transform.position = _shooter.position;
                 _ball.SetActive(true);
                 _ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                _ball.GetComponent<Rigidbody>().AddForce(transform.right * 15f * _superPower, ForceMode.Impulse);
+                _ball.GetComponent<Rigidbody>().AddForce(_shooter.right * 30f * _superPower, ForceMode.Impulse);
                 _ball = null;
                 GetComponent<Animator>().SetTrigger("Spit");
                 _hasBall = false;
