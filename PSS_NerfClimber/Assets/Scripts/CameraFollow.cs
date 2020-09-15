@@ -20,12 +20,12 @@ public class CameraFollow : MonoBehaviour
     {
         if (transform.position.z - _offset < _target.position.z)// && transform.position.y - _offset <= 45)
         {
-            transform.position = new Vector3(transform.position.x, _target.position.y - _offset, transform.position.z);
+            transform.position = new Vector3(_target.position.x, _target.position.y - _offset, transform.position.z);
         }
 
         if (transform.position.y <= 5)
         {
-            transform.position = new Vector3(transform.position.x, 5, transform.position.z);
+            transform.position = new Vector3(_target.position.x, 5, transform.position.z);
         }
     }
 
