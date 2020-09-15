@@ -40,6 +40,7 @@ public class CanonBehaviour : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         _rewardFX = _gameManager._rewardTextFX;
         _textFX = _rewardFX.GetComponent<TextMeshPro>();
+        _canonController = FindObjectOfType<CanonController>();
     }
 
     // Start is called before the first frame update
