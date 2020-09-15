@@ -26,7 +26,7 @@ public class CanonController : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
 
-                if (Physics.Raycast(ray, out hitInfo))
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, ~11))
                 {
                     if (_gameManager._activeCanon != null)
                     {
