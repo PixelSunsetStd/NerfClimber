@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb.GetComponent<Rigidbody>();
-        _isMoving = true;
+        //_isMoving = true;
         //_gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -65,9 +65,9 @@ public class PlayerController : MonoBehaviour
         _rb.MovePosition(Vector3.MoveTowards(transform.position, transform.position + transform.forward, _moveSpeed * Time.deltaTime));
      }
 
-    public void SetMoveState()
+    public void SetMoveState(bool isMoving)
     {
-        _isMoving = !_isMoving;
+        _isMoving = isMoving;
     }
 
     public void Fire()
