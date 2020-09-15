@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: boug_green
+  m_Name: boug_jaune
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
@@ -73,5 +73,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.4951774, g: 1, b: 0, a: 1}
-    - _EmissionColor: {r: 0, g: 0.5377358, b: 0.1300702, a: 1}
+    - _Color: {r: 0.9810126, g: 1, b: 0, a: 1}
+    - _EmissionColor: {r: 0.7264151, g: 0.29626343, b: 0, a: 1}
