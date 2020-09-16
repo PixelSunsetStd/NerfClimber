@@ -18,10 +18,10 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < _target.position.y)
+        if (transform.position.y - _offset < _target.position.y)
         {
             //transform.position = new Vector3(_target.position.x, _target.position.y, _startPos.z);
-            transform.position = new Vector3(_target.position.x, _target.position.y, _startPos.z);
+            transform.position = new Vector3(_target.position.x, _target.position.y + _offset, _startPos.z);
         }
 
         if (transform.position.x != _target.position.x)
@@ -32,6 +32,6 @@ public class CameraFollow : MonoBehaviour
 
     public void SetPosition()
     {
-        transform.position = new Vector3(transform.position.x, _target.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, _target.position.y + _offset, transform.position.z);
     }
 }
