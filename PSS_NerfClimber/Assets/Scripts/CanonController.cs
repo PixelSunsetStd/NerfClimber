@@ -26,14 +26,16 @@ public class CanonController : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
 
-                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, ~11))
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
                 {
                     if (_gameManager._activeCanon != null)
                     {
+                        Vector3 point = hitInfo.point;
+                        point.z = 0;
                         _fingerPoint.gameObject.SetActive(true);
-                        _gameManager._activeCanon.transform.LookAt(hitInfo.point);
+                        _gameManager._activeCanon.transform.LookAt(point);
                         //transform.localRotation = Quaternion.Euler(Vector3.RotateTowards(transform.position, hitInfo.point, 1, 1));
-                        _fingerPoint.position = hitInfo.point;
+                        _fingerPoint.position = point;
                         _fingerPoint.GetComponent<LineRenderer>().SetPosition(0, _fingerPoint.position);
                         _fingerPoint.GetComponent<LineRenderer>().SetPosition(1, _gameManager._activeCanon._shooter.transform.position);
                         _power = Vector3.Distance(_fingerPoint.position, _gameManager._activeCanon._shooter.transform.position);

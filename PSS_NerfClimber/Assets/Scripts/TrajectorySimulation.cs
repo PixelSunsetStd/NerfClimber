@@ -27,6 +27,8 @@ public class TrajectorySimulation : MonoBehaviour
 
     public float _trajectoryAdjustment;
 
+    public LayerMask _lm;
+
     private void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
@@ -69,7 +71,7 @@ public class TrajectorySimulation : MonoBehaviour
 
                 // Check to see if we're going to hit a physics object
                 RaycastHit hit;
-                if (Physics.Raycast(segments[i - 1], segVelocity, out hit, segmentScale))
+                if (Physics.Raycast(segments[i - 1], segVelocity, out hit, segmentScale, _lm))
                 {
                     // remember who we hit
                     _hitObject = hit.collider;
@@ -81,6 +83,10 @@ public class TrajectorySimulation : MonoBehaviour
                     // flip the velocity to simulate a bounce
                     segVelocity = Vector3.Reflect(segVelocity, hit.normal);
 
+                    //Debug.Log(hit.collider.tag);
+                    //if (hit.collider.CompareTag("Canon"))
+                        //break;
+                    
                     /*
                      * Here you could check if the object hit by the Raycast had some property - was 
                      * sticky, would cause the ball to explode, or was another ball in the air for 

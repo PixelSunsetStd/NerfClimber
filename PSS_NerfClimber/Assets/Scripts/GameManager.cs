@@ -24,12 +24,14 @@ public class GameManager : MonoBehaviour
     public ParticleSystem _rewardTextFX;
 
     public List<GameObject> _levels;
+    public List<GameObject> _activeLevels;
     public int _levelIndex;
     
     // Start is called before the first frame update
     void Start()
     {
         //_levels[_levelIndex].SetActive(true);
+        NextChunk();
     }
 
     // Update is called once per frame
@@ -113,6 +115,19 @@ public class GameManager : MonoBehaviour
         Camera.main.GetComponent<CameraFollow>()._offset = 5;
         Camera.main.GetComponent<CameraFollow>().SetPosition();
         _ball.gameObject.SetActive(true);
+    }
+
+    public void NextChunk()
+    {
+        //int randomChunk = Random.Range(0, _levels.Count);
+        GameObject chunk = Instantiate(_levels[Random.Range(0, _levels.Count)]);
+
+        _activeLevels.Add(chunk);
+        //_levels.Remove(chunk);
+
+        chunk.transform.position = Vector3.up * 50 * _levelIndex;
+
+        chunk.SetActive(true);
     }
 
 }
