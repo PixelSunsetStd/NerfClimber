@@ -32,10 +32,13 @@ public class CanonController : MonoBehaviour
                     {
                         _fingerPoint.gameObject.SetActive(true);
                         _gameManager._activeCanon.transform.LookAt(hitInfo.point);
+                        //transform.localRotation = Quaternion.Euler(Vector3.RotateTowards(transform.position, hitInfo.point, 1, 1));
                         _fingerPoint.position = hitInfo.point;
                         _fingerPoint.GetComponent<LineRenderer>().SetPosition(0, _fingerPoint.position);
-                        _fingerPoint.GetComponent<LineRenderer>().SetPosition(1, _gameManager._activeCanon.transform.position);
-                        _power = Vector3.Distance(_fingerPoint.position, _gameManager._activeCanon.transform.position);
+                        _fingerPoint.GetComponent<LineRenderer>().SetPosition(1, _gameManager._activeCanon._shooter.transform.position);
+                        _power = Vector3.Distance(_fingerPoint.position, _gameManager._activeCanon._shooter.transform.position);
+                        _power *= 3;
+                        //GetComponent<SimulationTrajectory>().SimulatePath(_gameManager._ball.gameObject, _gameManager._activeCanon._shooter.transform.forward * _power, 1, 0);
                     }
                 }
                 else _fingerPoint.gameObject.SetActive(false);
@@ -50,7 +53,7 @@ public class CanonController : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && _gameManager._activeCanon != null)
         {
             _fingerPoint.gameObject.SetActive(false);
-            _gameManager._activeCanon.SpitBall(_power * 3);
+            _gameManager._activeCanon.SpitBall(_power);
         }
     }
 }
