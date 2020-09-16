@@ -77,7 +77,8 @@ public class CanonBehaviour : MonoBehaviour
                 _ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 _ball.GetComponent<Rigidbody>().AddForce(_shooter.forward * power * _superPower, ForceMode.Impulse);
                 _ball = null;
-                GetComponent<Animator>().SetTrigger("Spit");
+                //GetComponent<Animator>().SetTrigger("Spit");
+                GetComponentInChildren<Animator>().SetTrigger("Fire");
                 _hasBall = false;
                 _gameManager._prevCanon = _gameManager._activeCanon;
                 _gameManager._activeCanon = null;
@@ -152,7 +153,8 @@ public class CanonBehaviour : MonoBehaviour
             _canonController.transform.position = transform.position;
             _ball.SetActive(false);
             _hasBall = true;
-            GetComponent<Animator>().SetTrigger("Catch");
+            //GetComponent<Animator>().SetTrigger("Catch");
+            GetComponentInChildren<Animator>().SetTrigger("Hit");
             _gameManager._activeCanon = GetComponent<CanonBehaviour>();
             GetComponent<AudioSource>().clip = _sndCatch;
             GetComponent<AudioSource>().Play();
