@@ -54,8 +54,8 @@ public class TrajectorySimulation : MonoBehaviour
             // The initial velocity
             //Vector3 segVelocity = playerFire.transform.up * playerFire._power * Time.deltaTime;
             if (_gameManager._activeCanon != null)
-                segVelocity = -_gameManager._activeCanon._shooter.transform.forward * playerFire._power * _trajectoryAdjustment * Time.deltaTime;
-
+                segVelocity = -_gameManager._activeCanon._shooter.transform.TransformDirection(_gameManager._activeCanon._shooter.transform.right) * playerFire._power * _trajectoryAdjustment * Time.deltaTime;
+            //transform.TransformDirection(_gameManager._activeCanon._shooter.transform.forward);
             // reset our hit object
             _hitObject = null;
 
