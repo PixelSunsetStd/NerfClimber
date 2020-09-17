@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
         tpsc = FindObjectOfType<TextParticleSystemController>();
 
         GetChunks(_levelIndex);
+
+        _player.transform.position = _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5;
     }
 
     public void GetChunks(int index)
@@ -43,7 +45,8 @@ public class GameManager : MonoBehaviour
         _levelChunks.Clear();
         for (int i = 0; i < _levels[index].transform.childCount; i++)
         {
-            _levelChunks.Add(_levels[index].transform.GetChild(i).gameObject);
+            if (_levels[index].transform.GetChild(i).GetComponent<LevelBehaviour>() != null)
+                _levelChunks.Add(_levels[index].transform.GetChild(i).gameObject);
         }
     }
 
@@ -176,7 +179,7 @@ public class GameManager : MonoBehaviour
                         _player.GetComponent<Animator>().SetBool("isRunning", false);
                     }
                     //START CHEERING ANIMATION
-
+                    _player.GetComponent<Animator>().SetTrigger("Cheer");
                     //SET GAME PHASE
                     _gamePhase = GamePhase.isWaiting;
                     Debug.Log("Victory");
