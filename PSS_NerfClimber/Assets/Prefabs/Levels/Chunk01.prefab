@@ -121,7 +121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1246718385403618173
 Transform:
   m_ObjectHideFlags: 0
@@ -632,6 +632,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -811,6 +816,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canon (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
@@ -1082,6 +1092,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1166,6 +1181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canon (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
@@ -1347,6 +1367,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1431,6 +1456,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canon (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
@@ -1612,6 +1642,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1697,6 +1732,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1781,6 +1821,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canon (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
@@ -1957,6 +2002,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2041,6 +2091,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284656573636495742, guid: f0d4b91b70d320e47b3b892ac2be810a,
+        type: 3}
+      propertyPath: _givePoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4284656573636495743, guid: f0d4b91b70d320e47b3b892ac2be810a,
         type: 3}

@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Test_Visuel_Logan.unity
-    guid: a94efae544235ab40bc3c005bf08620a
+    path: Assets/Scenes/Test_Visuel_Arnaud_Planet.unity
+    guid: d542198ed156bbc40abdab24044e9160
   m_configObjects: {}

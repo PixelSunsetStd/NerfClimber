@@ -16,7 +16,6 @@ public class TextParticleSystemController : MonoBehaviour
 
         //textMeshPro.color = Color.Lerp(Color.white, Color.red, GetComponentInParent<TrafficBehaviour>()._numberOfCollisions / 5.0f);
 
-        textMeshPro.text = "Nice"; ;
-        //textParticleSystem.Play();
+        textMeshPro.text = "Nice";
     }
 }
