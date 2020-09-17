@@ -32,12 +32,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Invoke("StartGame", 3f);
-        StartCoroutine(StartCountDown(3));
+        //StartCoroutine(StartCountDown(3));
         tpsc = FindObjectOfType<TextParticleSystemController>();
 
         GetChunks(_levelIndex);
 
         //_player.transform.position = _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5;
+    }
+
+    public void StartGame()
+    {
+        StartCoroutine(StartCountDown(3f));
     }
 
     public void GetChunks(int index)
@@ -52,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator NextLevel()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
 
         //Destroy(_levels[_levelIndex].gameObject);
 
@@ -80,11 +85,6 @@ public class GameManager : MonoBehaviour
         }
 
         //_startCountDownText.gameObject.SetActive(false);
-        StartGame();
-    }
-
-    void StartGame()
-    {
         _gamePhase = GamePhase.isMoving;
     }
 

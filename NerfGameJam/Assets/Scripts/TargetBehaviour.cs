@@ -7,6 +7,8 @@ public class TargetBehaviour : MonoBehaviour
     private GameManager _gameManager;
 
     public int _points;
+
+    public bool _isStart = false;
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,7 @@ public class TargetBehaviour : MonoBehaviour
 
     public void DetectRay()
     {
-        _gameManager._score += _points;
+         _gameManager._score += _points;
         GetComponentInParent<TargetManager>().TargetTouched();
         GetComponent<MeshRenderer>().enabled = false;
         _gameManager.PlayPointsFX(transform.position, _points);
