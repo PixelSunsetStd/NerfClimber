@@ -81,9 +81,9 @@ public class LevelBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
 
-        if (_gameManager._levelIndex < _gameManager._levelChunks.Count - 1)
+        if (_gameManager._chunkIndex < _gameManager._levelChunks.Count - 1)
         {
-            FindObjectOfType<GameManager>()._levelIndex++;
+            FindObjectOfType<GameManager>()._chunkIndex++;
             FindObjectOfType<GameManager>()._gamePhase = GameManager.GamePhase.isMoving;
         }
 

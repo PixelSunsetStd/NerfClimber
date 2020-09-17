@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     public int _score;
 
     public int _levelIndex;
+    public int _chunkIndex;
 
+    public List<GameObject> _levels;
     public List<GameObject> _levelChunks;
 
     public float _targetTime;
@@ -31,6 +33,33 @@ public class GameManager : MonoBehaviour
         //Invoke("StartGame", 3f);
         StartCoroutine(StartCountDown(3));
         tpsc = FindObjectOfType<TextParticleSystemController>();
+
+        GetChunks(_levelIndex);
+    }
+
+    public void GetChunks(int index)
+    {
+        _levelChunks.Clear();
+        for (int i = 0; i < _levels[index].transform.childCount; i++)
+        {
+            _levelChunks.Add(_levels[index].transform.GetChild(i).gameObject);
+        }
+    }
+
+    public IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        //Destroy(_levels[_levelIndex].gameObject);
+
+        _levelIndex++;
+        GetChunks(_levelIndex);
+        _chunkIndex = 0;
+
+        _player.transform.position = Vector3.zero;
+        _levels[_levelIndex].transform.position = Vector3.zero;
+
+        _gamePhase = GamePhase.isMoving;
     }
 
     IEnumerator StartCountDown(float time)
@@ -101,14 +130,30 @@ public class GameManager : MonoBehaviour
                 _speed++;
             }*/
 
-            if (_player.transform.position == Vector3.forward * _levelIndex * 10)
+            if (_player.transform.position == _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _levelIndex * 10)
             {
-                _levelChunks[_levelIndex].GetComponent<LevelBehaviour>().ActivateTargets();
-                if (_player.GetComponent<Animator>().GetBool("isRunning"))
+                if (_chunkIndex < _levelChunks.Count - 1)
                 {
-                    _player.GetComponent<Animator>().SetBool("isRunning", false);
+                    _levelChunks[_chunkIndex].GetComponent<LevelBehaviour>().ActivateTargets();
+
+                    if (_player.GetComponent<Animator>().GetBool("isRunning"))
+                    {
+                        _player.GetComponent<Animator>().SetBool("isRunning", false);
+                    }
+                    _gamePhase = GamePhase.isShooting;
                 }
-                _gamePhase = GamePhase.isShooting;
+                else {
+                    if (_player.GetComponent<Animator>().GetBool("isRunning"))
+                    {
+                        _player.GetComponent<Animator>().SetBool("isRunning", false);
+                    }
+                    _gamePhase = GamePhase.isWaiting;
+                    Debug.Log("Victory");
+
+                    StartCoroutine(NextLevel());
+                }
+
+                
                 //_speed = 1;
             }
             else
@@ -117,7 +162,7 @@ public class GameManager : MonoBehaviour
                     _player.GetComponent<Animator>().SetBool("isRunning", true);
                 //_player.GetComponent<Animator>().speed = _speed / 10f;
                 //_player.GetComponent<Animator>().SetTrigger("Run");
-                _player.transform.position = Vector3.MoveTowards(_player.transform.position, Vector3.forward * _levelIndex * 10, _speed * Time.deltaTime);
+                _player.transform.position = Vector3.MoveTowards(_player.transform.position, _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5, _speed * Time.deltaTime);//Vector3.forward * _levelIndex * 10, _speed * Time.deltaTime);
             }
         }
     }
