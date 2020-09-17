@@ -33,4 +33,6 @@ public class RandomStartColor : MonoBehaviour
         renderer.materials = newMats;
 
     }
+
+    
 }
