@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> _levelChunks;
 
     public float _targetTime;
+    public Slider _targetTimeSlider;
 
     public ParticleSystem _impactFX;
 
@@ -56,8 +57,8 @@ public class GameManager : MonoBehaviour
         GetChunks(_levelIndex);
         _chunkIndex = 0;
 
-        _player.transform.position = Vector3.zero;
-        _levels[_levelIndex].transform.position = Vector3.zero;
+        //_player.transform.position = Vector3.zero;
+        //_levels[_levelIndex].transform.position = Vector3.zero;
 
         _gamePhase = GamePhase.isMoving;
     }
@@ -82,6 +83,26 @@ public class GameManager : MonoBehaviour
     void StartGame()
     {
         _gamePhase = GamePhase.isMoving;
+    }
+
+    IEnumerator StartChunkTimer()
+    {
+        float time = _targetTime;
+
+        _targetTimeSlider.maxValue = time;
+        _targetTimeSlider.gameObject.SetActive(true);
+
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            time -= 0.1f;
+            _targetTimeSlider.value = time;
+
+        }
+
+        _targetTimeSlider.gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -129,34 +150,43 @@ public class GameManager : MonoBehaviour
             {
                 _speed++;
             }*/
-
+            //IF PLAYER'S POSITION = CHUNK POSITION
             if (_player.transform.position == _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _levelIndex * 10)
             {
+                //ACTIVATE CHUNK IF THERE IS ONE
                 if (_chunkIndex < _levelChunks.Count - 1)
                 {
+                    //START TARGET ANIMATIONS
                     _levelChunks[_chunkIndex].GetComponent<LevelBehaviour>().ActivateTargets();
-
+                    //STOP RUNNING ANIMATION
                     if (_player.GetComponent<Animator>().GetBool("isRunning"))
                     {
                         _player.GetComponent<Animator>().SetBool("isRunning", false);
                     }
+                    //START SHOOTING PHASE
                     _gamePhase = GamePhase.isShooting;
+
+                    StartCoroutine(StartChunkTimer());
                 }
-                else {
+                else //VICTORY!
+                {
+                    //STOP RUNNING ANIMATION
                     if (_player.GetComponent<Animator>().GetBool("isRunning"))
                     {
                         _player.GetComponent<Animator>().SetBool("isRunning", false);
                     }
+                    //START CHEERING ANIMATION
+
+                    //SET GAME PHASE
                     _gamePhase = GamePhase.isWaiting;
                     Debug.Log("Victory");
 
+                    //START NEXT LEVEL
                     StartCoroutine(NextLevel());
                 }
-
-                
                 //_speed = 1;
             }
-            else
+            else //PLAYER MOVES TO THE NEXT CHUNK
             {
                 if (!_player.GetComponent<Animator>().GetBool("isRunning"))
                     _player.GetComponent<Animator>().SetBool("isRunning", true);
