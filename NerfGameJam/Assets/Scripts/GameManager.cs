@@ -180,6 +180,9 @@ public class GameManager : MonoBehaviour
                     //SET GAME PHASE
                     _gamePhase = GamePhase.isWaiting;
                     Debug.Log("Victory");
+                    if (_levelChunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true) != null)
+                        _levelChunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true).gameObject.SetActive(true);
+
 
                     //START NEXT LEVEL
                     StartCoroutine(NextLevel());
