@@ -35,6 +35,10 @@ public class LevelBehaviour : MonoBehaviour
             {
                 rot.StartRot();
             }
+            foreach (Translator trans in GetComponentsInChildren<Translator>(true))
+            {
+                trans.enabled = true;
+            }
         }
 
         StartCoroutine(DeactivateTargets());
@@ -62,6 +66,11 @@ public class LevelBehaviour : MonoBehaviour
             {
                 rot.StopRot();
             }
+
+            foreach (Translator trans in GetComponentsInChildren<Translator>())
+            {
+                trans.enabled = false;
+            }
         }
 
         StartCoroutine(NextLevel());
@@ -85,6 +94,8 @@ public class LevelBehaviour : MonoBehaviour
         {
             FindObjectOfType<GameManager>()._chunkIndex++;
             FindObjectOfType<GameManager>()._gamePhase = GameManager.GamePhase.isMoving;
+            //if (GetComponentInChildren<Animator>() != null)
+                //GetComponentInChildren<Animator>().SetTrigger("Open");
         }
 
         //Destroy(gameObject);

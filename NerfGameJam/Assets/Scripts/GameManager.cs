@@ -309,6 +309,7 @@ public class GameManager : MonoBehaviour
     {
         _levelIndex++;
         _levels[_levelIndex - 1].gameObject.SetActive(false);
+        _levels[_levelIndex].gameObject.SetActive(true);
         _levels[_levelIndex].transform.position = Vector3.zero;
         _player.transform.position = _levels[_levelIndex].transform.position;
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
