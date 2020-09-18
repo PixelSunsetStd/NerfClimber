@@ -39,6 +39,7 @@ public class CollectDebris : MonoBehaviour
         forceField.gravity = 0;
 
     }
+
     private void OnParticleCollision(GameObject other)
     {
         StartCoroutine(WaitAndKillParticleSystem(other.gameObject));
@@ -50,4 +51,6 @@ public class CollectDebris : MonoBehaviour
         yield return new WaitForSeconds(3);
         Destroy(go);
     }
+
+
 }

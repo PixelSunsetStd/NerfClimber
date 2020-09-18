@@ -6,6 +6,11 @@ public class CameraBehaviour : MonoBehaviour
 {
     public Transform _target;
     Vector3 _startPos;
+
+    private void Awake()
+    {
+        _startPos = transform.position;
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -16,6 +21,6 @@ public class CameraBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = _target.position + _startPos;
+        transform.position = _startPos + _target.position;
     }
 }

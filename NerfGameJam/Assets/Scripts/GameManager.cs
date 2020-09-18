@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -59,14 +60,14 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
 
-        //Destroy(_levels[_levelIndex].gameObject);
+        _player.transform.rotation = Quaternion.Euler(Vector3.zero);
 
         _levelIndex++;
         GetChunks(_levelIndex);
         _chunkIndex = 0;
 
         //_player.transform.position = Vector3.zero;
-        //_levels[_levelIndex].transform.position = Vector3.zero;
+        //_levels[_levelIndex].transform.position = _player.transform.position + Vector3.forward * 10;
 
         _gamePhase = GamePhase.isMoving;
     }
@@ -111,6 +112,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            SceneManager.LoadScene(0);
+
         if (_gamePhase == GamePhase.isShooting)// || _gamePhase == GamePhase.isMoving)
         {
             _startCountDownText.text = "Shoot!";
@@ -157,6 +161,22 @@ public class GameManager : MonoBehaviour
             //IF PLAYER'S POSITION = CHUNK POSITION
             if (_player.transform.position == _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _levelIndex * 10)
             {
+                if (_levelIndex > 0)
+                {
+                    Destroy(_levels[_levelIndex - 1].gameObject);
+
+                    float dist = Vector3.Distance(_player.transform.position, Vector3.zero);
+
+                    _player.transform.position = new Vector3(0, 0, _player.transform.position.z - dist);
+                    for (int i = _levelIndex; i < _levels.Count; i++)
+                    {
+                        _levels[i].transform.position = new Vector3(0, 0, _levels[i].transform.position.z - dist);
+
+                    }
+
+
+                }
+
                 //ACTIVATE CHUNK IF THERE IS ONE
                 if (_chunkIndex < _levelChunks.Count - 1)
                 {
@@ -200,7 +220,10 @@ public class GameManager : MonoBehaviour
             else //PLAYER MOVES TO THE NEXT CHUNK
             {
                 if (!_player.GetComponent<Animator>().GetBool("isRunning"))
+                {
                     _player.GetComponent<Animator>().SetBool("isRunning", true);
+                    _player.GetComponentInChildren<CollectDebris>().Collect();
+                }
                 //_player.GetComponent<Animator>().speed = _speed / 10f;
                 //_player.GetComponent<Animator>().SetTrigger("Run");
                 _player.transform.position = Vector3.MoveTowards(_player.transform.position, _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5, _speed * Time.deltaTime);//Vector3.forward * _levelIndex * 10, _speed * Time.deltaTime);
