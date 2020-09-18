@@ -24,10 +24,11 @@ public class TargetBehaviour : MonoBehaviour
 
     public void DetectRay()
     {
-         _gameManager._score += _points;
+        _gameManager._score += _points;
         GetComponentInParent<TargetManager>().TargetTouched();
         GetComponent<MeshRenderer>().enabled = false;
         _gameManager.PlayPointsFX(transform.position, _points);
+        GetComponent<AudioSource>().Play();
         //FindObjectOfType<TextParticleSystemController>().GetComponent<ParticleSystem>().Play();
     }
 }

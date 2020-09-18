@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
     public Button _restartSectionBtn;
     public Button _nextLevelBtn;
 
+    public AudioSource _sfxAudioSource;
+    public AudioClip[] _audioClips;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,6 +104,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartCountDown(float time)
     {
+
+        _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+
         _startCountDownText.gameObject.SetActive(true);
 
         while (time > 0)
@@ -188,25 +194,6 @@ public class GameManager : MonoBehaviour
             //IF PLAYER'S POSITION = CHUNK POSITION
             if (_player.transform.position == _chunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _sectionIndex * 10)
             {
-                if (_sectionIndex > 0)
-                {
-                    /*if (_chunkIndex == 0)
-                    {
-                        //Destroy(_sections[_sectionIndex - 1].gameObject);
-
-                        float dist = Vector3.Distance(_player.transform.position, Vector3.zero);
-
-                        _player.transform.position = new Vector3(0, 0, _player.transform.position.z - dist);
-                        for (int i = 0; i < _sections.Count; i++)
-                        {
-                            _sections[i].transform.position = new Vector3(0, 0, _sections[i].transform.position.z - dist);
-
-                        } 
-                    }*/
-
-
-                }
-
                 //ACTIVATE CHUNK IF THERE IS ONE
                 if (_chunkIndex < _chunks.Count - 1)
                 {
@@ -240,6 +227,9 @@ public class GameManager : MonoBehaviour
 
                         _startCountDownText.text = "Section failed!";
 
+                        _sfxAudioSource.clip = _audioClips[1];
+                        _sfxAudioSource.Play();
+
                         DisplayRestartButton();
                     }
                     else
@@ -264,6 +254,8 @@ public class GameManager : MonoBehaviour
                         {
                             Debug.Log("END OF LEVEL");
                             _nextLevelBtn.gameObject.SetActive(true);
+                            _sfxAudioSource.clip = _audioClips[0];
+                            _sfxAudioSource.Play();
                         }
 
                     }
