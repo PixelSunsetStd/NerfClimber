@@ -9851,10 +9851,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4240011882839996025, guid: bef60b0cdb16382429573b3b097f3635,
+        type: 3}
+      propertyPath: m_Text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8624831036076547138, guid: bef60b0cdb16382429573b3b097f3635,
         type: 3}
       propertyPath: m_Name
       value: Panneau
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624831036076547138, guid: bef60b0cdb16382429573b3b097f3635,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bef60b0cdb16382429573b3b097f3635, type: 3}

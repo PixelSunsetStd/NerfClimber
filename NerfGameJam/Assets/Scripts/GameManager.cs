@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GamePhase _gamePhase;
 
     public int _score;
+    public int[] _chunkScores;// = new int[3];
 
     public int _levelIndex;
     public int _chunkIndex;
@@ -49,10 +50,18 @@ public class GameManager : MonoBehaviour
     public void GetChunks(int index)
     {
         _levelChunks.Clear();
+        _chunkScores = new int[3];
         for (int i = 0; i < _levels[index].transform.childCount; i++)
         {
             if (_levels[index].transform.GetChild(i).GetComponent<LevelBehaviour>() != null)
+            {
                 _levelChunks.Add(_levels[index].transform.GetChild(i).gameObject);
+                int numberOfTargets = _levels[index].transform.GetChild(i).GetComponent<LevelBehaviour>()._targets.Count;
+                _chunkScores[0] += numberOfTargets * 10;
+                _chunkScores[1] += numberOfTargets * 25;
+                _chunkScores[2] += numberOfTargets * 50;
+
+            }
         }
     }
 
@@ -163,15 +172,18 @@ public class GameManager : MonoBehaviour
             {
                 if (_levelIndex > 0)
                 {
-                    Destroy(_levels[_levelIndex - 1].gameObject);
-
-                    float dist = Vector3.Distance(_player.transform.position, Vector3.zero);
-
-                    _player.transform.position = new Vector3(0, 0, _player.transform.position.z - dist);
-                    for (int i = _levelIndex; i < _levels.Count; i++)
+                    if (_chunkIndex == 0)
                     {
-                        _levels[i].transform.position = new Vector3(0, 0, _levels[i].transform.position.z - dist);
+                        //Destroy(_levels[_levelIndex - 1].gameObject);
 
+                        float dist = Vector3.Distance(_player.transform.position, Vector3.zero);
+
+                        _player.transform.position = new Vector3(0, 0, _player.transform.position.z - dist);
+                        for (int i = 0; i < _levels.Count; i++)
+                        {
+                            _levels[i].transform.position = new Vector3(0, 0, _levels[i].transform.position.z - dist);
+
+                        } 
                     }
 
 
@@ -200,7 +212,17 @@ public class GameManager : MonoBehaviour
                         _player.GetComponent<Animator>().SetBool("isRunning", false);
                     }
                     //START CHEERING ANIMATION
-                    _player.GetComponent<Animator>().SetTrigger("Cheer");
+
+                    if (_score < _chunkScores[0])
+                    {
+                        _player.GetComponent<Animator>().SetTrigger("Defeat");
+                    }
+                    else
+                    {
+                        _player.GetComponent<Animator>().SetTrigger("Cheer");
+                    }
+
+                    _player.transform.rotation = Quaternion.Euler(0, 180, 0);
                     //SET GAME PHASE
                     _gamePhase = GamePhase.isWaiting;
                     Debug.Log("Victory");
