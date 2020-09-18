@@ -12,14 +12,17 @@ public class GameManager : MonoBehaviour
     public enum GamePhase { isWaiting, isMoving, isShooting };
     public GamePhase _gamePhase;
 
+    public int _totalScore;
     public int _score;
     public int[] _chunkScores;// = new int[3];
 
     public int _levelIndex;
+    public int _sectionIndex;
     public int _chunkIndex;
 
     public List<GameObject> _levels;
-    public List<GameObject> _levelChunks;
+    public List<GameObject> _sections;
+    public List<GameObject> _chunks;
 
     public float _targetTime;
     public Slider _targetTimeSlider;
@@ -30,16 +33,18 @@ public class GameManager : MonoBehaviour
 
     TextParticleSystemController tpsc;
 
+    public Button _restartSectionBtn;
+    public Button _nextLevelBtn;
+
     // Start is called before the first frame update
     void Start()
     {
         //Invoke("StartGame", 3f);
         //StartCoroutine(StartCountDown(3));
         tpsc = FindObjectOfType<TextParticleSystemController>();
+        GetSections(_levelIndex);
 
-        GetChunks(_levelIndex);
-
-        //_player.transform.position = _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5;
+        //_player.transform.position = _chunks[_chunkIndex].transform.position - Vector3.forward * 5;
     }
 
     public void StartGame()
@@ -49,14 +54,14 @@ public class GameManager : MonoBehaviour
 
     public void GetChunks(int index)
     {
-        _levelChunks.Clear();
+        _chunks.Clear();
         _chunkScores = new int[3];
-        for (int i = 0; i < _levels[index].transform.childCount; i++)
+        for (int i = 0; i < _sections[index].transform.childCount; i++)
         {
-            if (_levels[index].transform.GetChild(i).GetComponent<LevelBehaviour>() != null)
+            if (_sections[index].transform.GetChild(i).GetComponent<LevelBehaviour>() != null)
             {
-                _levelChunks.Add(_levels[index].transform.GetChild(i).gameObject);
-                int numberOfTargets = _levels[index].transform.GetChild(i).GetComponent<LevelBehaviour>()._targets.Count;
+                _chunks.Add(_sections[index].transform.GetChild(i).gameObject);
+                int numberOfTargets = _sections[index].transform.GetChild(i).GetComponent<LevelBehaviour>()._targets.Count;
                 _chunkScores[0] += numberOfTargets * 10;
                 _chunkScores[1] += numberOfTargets * 25;
                 _chunkScores[2] += numberOfTargets * 50;
@@ -65,18 +70,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator NextLevel()
+    public void GetSections(int index)
+    {
+        _sections.Clear();
+
+        for (int i = 0; i < _levels[index].transform.childCount; i++)
+        {
+            _sections.Add(_levels[index].transform.GetChild(i).gameObject);
+        }
+
+        GetChunks(1);
+    }
+
+    public IEnumerator NextSection()
     {
         yield return new WaitForSeconds(3.0f);
 
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-        _levelIndex++;
-        GetChunks(_levelIndex);
+        _sectionIndex++;
+        GetChunks(_sectionIndex);
         _chunkIndex = 0;
+        _score = 0;
 
         //_player.transform.position = Vector3.zero;
-        //_levels[_levelIndex].transform.position = _player.transform.position + Vector3.forward * 10;
+        //_sections[_sectionIndex].transform.position = _player.transform.position + Vector3.forward * 10;
 
         _gamePhase = GamePhase.isMoving;
     }
@@ -168,32 +186,32 @@ public class GameManager : MonoBehaviour
             }*/
 
             //IF PLAYER'S POSITION = CHUNK POSITION
-            if (_player.transform.position == _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _levelIndex * 10)
+            if (_player.transform.position == _chunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _sectionIndex * 10)
             {
-                if (_levelIndex > 0)
+                if (_sectionIndex > 0)
                 {
-                    if (_chunkIndex == 0)
+                    /*if (_chunkIndex == 0)
                     {
-                        //Destroy(_levels[_levelIndex - 1].gameObject);
+                        //Destroy(_sections[_sectionIndex - 1].gameObject);
 
                         float dist = Vector3.Distance(_player.transform.position, Vector3.zero);
 
                         _player.transform.position = new Vector3(0, 0, _player.transform.position.z - dist);
-                        for (int i = 0; i < _levels.Count; i++)
+                        for (int i = 0; i < _sections.Count; i++)
                         {
-                            _levels[i].transform.position = new Vector3(0, 0, _levels[i].transform.position.z - dist);
+                            _sections[i].transform.position = new Vector3(0, 0, _sections[i].transform.position.z - dist);
 
                         } 
-                    }
+                    }*/
 
 
                 }
 
                 //ACTIVATE CHUNK IF THERE IS ONE
-                if (_chunkIndex < _levelChunks.Count - 1)
+                if (_chunkIndex < _chunks.Count - 1)
                 {
                     //START TARGET ANIMATIONS
-                    _levelChunks[_chunkIndex].GetComponent<LevelBehaviour>().ActivateTargets();
+                    _chunks[_chunkIndex].GetComponent<LevelBehaviour>().ActivateTargets();
                     //STOP RUNNING ANIMATION
                     if (_player.GetComponent<Animator>().GetBool("isRunning"))
                     {
@@ -212,30 +230,43 @@ public class GameManager : MonoBehaviour
                         _player.GetComponent<Animator>().SetBool("isRunning", false);
                     }
                     //START CHEERING ANIMATION
+                    _player.transform.rotation = Quaternion.Euler(0, 180, 0);
 
                     if (_score < _chunkScores[0])
                     {
                         _player.GetComponent<Animator>().SetTrigger("Defeat");
+                        _gamePhase = GamePhase.isWaiting;
+
+
+                        _startCountDownText.text = "Section failed!";
+
+                        DisplayRestartButton();
                     }
                     else
                     {
                         _player.GetComponent<Animator>().SetTrigger("Cheer");
+
+                        //SET GAME PHASE
+                        _gamePhase = GamePhase.isWaiting;
+                        Debug.Log("Victory");
+                        _startCountDownText.text = "Congratulations!";
+
+                        if (_chunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true) != null)
+                            _chunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true).gameObject.SetActive(true);
+
+
+                        //START NEXT LEVEL
+                        if (_sectionIndex < _sections.Count - 1)
+                        {
+                            StartCoroutine(NextSection());
+                        }
+                        else
+                        {
+                            Debug.Log("END OF LEVEL");
+                            _nextLevelBtn.gameObject.SetActive(true);
+                        }
+
                     }
-
-                    _player.transform.rotation = Quaternion.Euler(0, 180, 0);
-                    //SET GAME PHASE
-                    _gamePhase = GamePhase.isWaiting;
-                    Debug.Log("Victory");
-                    _startCountDownText.text = "Congratulations!";
-
-                    if (_levelChunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true) != null)
-                        _levelChunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true).gameObject.SetActive(true);
-
-
-                    //START NEXT LEVEL
-                    if (_levelIndex < _levels.Count - 1)
-                        StartCoroutine(NextLevel());
-                    else Debug.Log("END OF LEVEL");
                 }
                 //_speed = 1;
             }
@@ -248,7 +279,7 @@ public class GameManager : MonoBehaviour
                 }
                 //_player.GetComponent<Animator>().speed = _speed / 10f;
                 //_player.GetComponent<Animator>().SetTrigger("Run");
-                _player.transform.position = Vector3.MoveTowards(_player.transform.position, _levelChunks[_chunkIndex].transform.position - Vector3.forward * 5, _speed * Time.deltaTime);//Vector3.forward * _levelIndex * 10, _speed * Time.deltaTime);
+                _player.transform.position = Vector3.MoveTowards(_player.transform.position, _chunks[_chunkIndex].transform.position - Vector3.forward * 5, _speed * Time.deltaTime);//Vector3.forward * _sectionIndex * 10, _speed * Time.deltaTime);
             }
         }
     }
@@ -259,4 +290,34 @@ public class GameManager : MonoBehaviour
         tpsc._textToDisplay = "+" + points.ToString();
         tpsc.OnEnable();
     }
+
+    public void TeleportPlayerToStartLevel()
+    {
+        _player.transform.position = _sections[_sectionIndex].transform.position - Vector3.forward * 5;
+        StartCoroutine(StartCountDown(3));
+        _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+        _chunkIndex = 0;
+
+    }
+
+    public void DisplayRestartButton()
+    {
+        _restartSectionBtn.gameObject.SetActive(true);
+    }
+
+    public void NextLevel()
+    {
+        _levelIndex++;
+        _levels[_levelIndex - 1].gameObject.SetActive(false);
+        _levels[_levelIndex].transform.position = Vector3.zero;
+        _player.transform.position = _levels[_levelIndex].transform.position;
+        _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        _sectionIndex = 1;
+        _chunkIndex = 0;
+        GetSections(_levelIndex);
+        
+        StartCoroutine(StartCountDown(3));
+    }
 }
+

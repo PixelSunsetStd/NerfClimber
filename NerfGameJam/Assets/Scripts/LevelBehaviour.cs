@@ -81,13 +81,13 @@ public class LevelBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
 
-        if (_gameManager._chunkIndex < _gameManager._levelChunks.Count - 1)
+        if (_gameManager._chunkIndex < _gameManager._chunks.Count - 1)
         {
             FindObjectOfType<GameManager>()._chunkIndex++;
             FindObjectOfType<GameManager>()._gamePhase = GameManager.GamePhase.isMoving;
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
 
     }
 }
