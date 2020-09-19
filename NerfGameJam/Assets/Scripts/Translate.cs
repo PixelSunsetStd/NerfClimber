@@ -18,7 +18,7 @@ public class Translate : MonoBehaviour
     Vector3 _rightPoint;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         _startPosition = transform.position;
         _leftPoint = _startPosition + Vector3.left * _distance;
@@ -27,6 +27,8 @@ public class Translate : MonoBehaviour
         if (_startLeft) _target = _leftPoint;
         else _target = _rightPoint;
     }
+
+
 
     // Update is called once per frame
     void Update()

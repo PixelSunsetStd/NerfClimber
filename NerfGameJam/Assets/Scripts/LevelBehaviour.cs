@@ -17,6 +17,12 @@ public class LevelBehaviour : MonoBehaviour
 
     public void ActivateTargets()
     {
+        _targets.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            _targets.Add(transform.GetChild(i).gameObject);
+        }
+
         foreach (GameObject target in _targets)
         {
             target.GetComponent<Animator>().SetTrigger("Open");
@@ -26,6 +32,13 @@ public class LevelBehaviour : MonoBehaviour
             foreach (Collider coll in colls)
             {
                 coll.enabled = true;
+            }
+
+            Renderer[] rends = target.GetComponentInChildren<TargetManager>().GetComponentsInChildren<Renderer>();
+
+            foreach (Renderer rend in rends)
+            {
+                rend.enabled = true;
             }
         }
 
@@ -57,6 +70,13 @@ public class LevelBehaviour : MonoBehaviour
             foreach (Collider coll in colls)
             {
                 coll.enabled = false;
+            }
+
+            Renderer[] rends = target.GetComponentInChildren<TargetManager>().GetComponentsInChildren<Renderer>();
+
+            foreach (Renderer rend in rends)
+            {
+                rend.enabled = true;
             }
         }
 

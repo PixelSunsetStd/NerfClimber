@@ -57,17 +57,20 @@ public class GameManager : MonoBehaviour
 
     void LoadLevel(int levelIndex)
     {
-        float dist = Vector3.Distance(_player.transform.position, _levels[levelIndex].transform.position);
+        foreach (GameObject level in _levels)
+        {
+            level.SetActive(false);
+        }
 
         for (int i = 0; i < _levels.Count; i++)
         {
-            if (i != levelIndex)
-                _levels[i].SetActive(false);
-            else _levels[levelIndex].SetActive(true);
-
             _levels[levelIndex].transform.position = Vector3.zero;
             _player.transform.position = _levels[levelIndex].transform.position;
             _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+            if (i != levelIndex)
+                _levels[i].SetActive(false);
+            else _levels[levelIndex].SetActive(true);
         }
     }
 
@@ -168,7 +171,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerPrefs.SetInt("Level", 0);
             SceneManager.LoadScene(0);
+        }
 
         if (_gamePhase == GamePhase.isShooting)// || _gamePhase == GamePhase.isMoving)
         {
@@ -244,7 +250,7 @@ public class GameManager : MonoBehaviour
                     //START CHEERING ANIMATION
                     _player.transform.rotation = Quaternion.Euler(0, 180, 0);
 
-                    if (_score < _chunkScores[0])
+                    if (_score < _chunkScores[1])
                     {
                         _player.GetComponent<Animator>().SetTrigger("Defeat");
                         _gamePhase = GamePhase.isWaiting;
@@ -332,10 +338,10 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Level", _levelIndex);
 
         _levels[_levelIndex - 1].gameObject.SetActive(false);
-        _levels[_levelIndex].gameObject.SetActive(true);
         _levels[_levelIndex].transform.position = Vector3.zero;
         _player.transform.position = _levels[_levelIndex].transform.position;
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+        _levels[_levelIndex].gameObject.SetActive(true);
 
         _sectionIndex = 1;
         _chunkIndex = 0;
