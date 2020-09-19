@@ -190,6 +190,8 @@ public class GameManager : MonoBehaviour
                 if (Physics.Raycast(ray, out hitInfo, 15f))
                 {
                     GameObject impactFX = Instantiate(_impactFX.gameObject, ray.origin, Quaternion.identity);
+                    //colorPick
+                    _impactFX.GetComponentInChildren<Debris>().Init(hitInfo.collider.GetComponent<Renderer>().material.color);
                     Debug.DrawRay(ray.origin, ray.direction * 10f);
                     _player.GetComponent<Animator>().SetTrigger("Fire");
                     impactFX.transform.position = hitInfo.point;

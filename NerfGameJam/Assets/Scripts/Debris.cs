@@ -14,4 +14,11 @@ public class Debris : MonoBehaviour
 
         particle.trigger.SetCollider(0, forcefield.transform);
     }
+    
+    public void Init(Color targetColor)
+    {
+        ParticleSystem.MainModule main = GetComponent<ParticleSystem>().main;
+        main.startColor = targetColor;
+
+    }
 }
