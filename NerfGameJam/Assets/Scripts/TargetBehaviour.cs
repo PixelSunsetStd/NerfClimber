@@ -8,7 +8,9 @@ public class TargetBehaviour : MonoBehaviour
 
     public int _points;
 
-    public bool _isStart = false;
+    //public bool _isStart = false;
+
+    public bool _isGold = false;
     
     // Start is called before the first frame update
     void Start()
@@ -25,10 +27,14 @@ public class TargetBehaviour : MonoBehaviour
     public void DetectRay()
     {
         _gameManager._score += _points;
-        GetComponentInParent<TargetManager>().TargetTouched();
-        GetComponent<MeshRenderer>().enabled = false;
         _gameManager.PlayPointsFX(transform.position, _points);
         GetComponent<AudioSource>().Play();
+
+        if (!_isGold)
+        {
+            GetComponentInParent<TargetManager>().TargetTouched();
+            GetComponent<MeshRenderer>().enabled = false;
+        }
         //FindObjectOfType<TextParticleSystemController>().GetComponent<ParticleSystem>().Play();
     }
 }

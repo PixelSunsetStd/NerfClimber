@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
         GetChunks(_sectionIndex);
         _chunkIndex = 0;
         _score = 0;
+        Debug.Log("Next Section");
 
         //_player.transform.position = Vector3.zero;
         //_sections[_sectionIndex].transform.position = _player.transform.position + Vector3.forward * 10;
@@ -124,7 +125,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartChunkTimer()
     {
-        float time = _targetTime;
+        float time = _targetTime - 0.25f;
 
         _targetTimeSlider.maxValue = time;
         _targetTimeSlider.gameObject.SetActive(true);
@@ -285,6 +286,7 @@ public class GameManager : MonoBehaviour
 
     public void TeleportPlayerToStartLevel()
     {
+        _score = 0;
         _player.transform.position = _sections[_sectionIndex].transform.position - Vector3.forward * 5;
         StartCoroutine(StartCountDown(3));
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -299,6 +301,8 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
+        _totalScore += _score;
+        _score = 0;
         _levelIndex++;
         _levels[_levelIndex - 1].gameObject.SetActive(false);
         _levels[_levelIndex].gameObject.SetActive(true);
