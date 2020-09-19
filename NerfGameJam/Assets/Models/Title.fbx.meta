@@ -3,7 +3,12 @@ guid: 34cd91262e1835543b113aa9b058a484
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fond
+    second: {fileID: 2100000, guid: 06e0a45dc918b0943badcb61e1518c6e, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
