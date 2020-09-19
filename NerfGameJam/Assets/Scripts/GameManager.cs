@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         tpsc = FindObjectOfType<TextParticleSystemController>();
 
         _levelIndex = PlayerPrefs.GetInt("Level", 0);
+        if (_levelIndex > _levels.Count - 1)
+            _levelIndex = 0;
 
         LoadLevel(_levelIndex);
 
@@ -89,9 +91,9 @@ public class GameManager : MonoBehaviour
             {
                 _chunks.Add(_sections[index].transform.GetChild(i).gameObject);
                 int numberOfTargets = _sections[index].transform.GetChild(i).GetComponent<LevelBehaviour>()._targets.Count;
-                _chunkScores[0] += numberOfTargets * 10;
-                _chunkScores[1] += numberOfTargets * 25;
-                _chunkScores[2] += numberOfTargets * 50;
+                _chunkScores[0] += numberOfTargets * 20;
+                _chunkScores[1] += numberOfTargets * 30;
+                _chunkScores[2] += numberOfTargets * 40;
 
             }
         }
@@ -206,8 +208,8 @@ public class GameManager : MonoBehaviour
                     if (hitInfo.collider.GetComponent<Rigidbody>() != null)
                     {
                         hitInfo.collider.GetComponent<Rigidbody>().AddForce(ray.direction * 10f, ForceMode.Impulse);
-                        _score++;
-                        PlayPointsFX(hitInfo.point, 1);
+                        _score += 5;
+                        PlayPointsFX(hitInfo.point, 5);
                     }
 
                 }
@@ -252,7 +254,7 @@ public class GameManager : MonoBehaviour
                     //START CHEERING ANIMATION
                     _player.transform.rotation = Quaternion.Euler(0, 180, 0);
 
-                    if (_score < _chunkScores[1])
+                    if (_score < _chunkScores[0])
                     {
                         _player.GetComponent<Animator>().SetTrigger("Defeat");
                         _gamePhase = GamePhase.isWaiting;
@@ -336,10 +338,13 @@ public class GameManager : MonoBehaviour
         _totalScore += _score;
         _score = 0;
         _levelIndex++;
+        _levels[_levelIndex - 1].gameObject.SetActive(false);
+
+        if (_levelIndex > _levels.Count - 1)
+            _levelIndex = 0;
 
         PlayerPrefs.SetInt("Level", _levelIndex);
 
-        _levels[_levelIndex - 1].gameObject.SetActive(false);
         _levels[_levelIndex].transform.position = Vector3.zero;
         _player.transform.position = _levels[_levelIndex].transform.position;
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
