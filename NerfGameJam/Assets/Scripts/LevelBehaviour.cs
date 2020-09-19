@@ -10,9 +10,15 @@ public class LevelBehaviour : MonoBehaviour
 
     bool _nextLevel;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
+
+        //_targets.Clear();
+        /*for (int i = 0; i < transform.childCount; i++)
+        {
+            _targets.Add(transform.GetChild(i).gameObject);
+        }*/
     }
 
     public void ActivateTargets()

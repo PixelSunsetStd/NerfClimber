@@ -21,7 +21,7 @@ public class RandomStartAnimation : MonoBehaviour
     
 
 
-    private void Awake()
+    private void OnEnable()
     {
         animator = GetComponent<Animator>();
         LaunchAnim();
