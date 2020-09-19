@@ -191,8 +191,8 @@ public class GameManager : MonoBehaviour
                 {
                     GameObject impactFX = Instantiate(_impactFX.gameObject, ray.origin, Quaternion.identity);
                     //colorPick
-                    _impactFX.GetComponentInChildren<Debris>().Init(hitInfo.collider.GetComponent<Renderer>().material.color);
-                    Debug.DrawRay(ray.origin, ray.direction * 10f);
+                    _impactFX.GetComponentInChildren<Debris>().Init(hitInfo.collider.GetComponentInChildren<Renderer>().material.color);
+                    Debug.DrawRay(ray.origin, ray.direction * 15f);
                     _player.GetComponent<Animator>().SetTrigger("Fire");
                     impactFX.transform.position = hitInfo.point;
                     impactFX.transform.LookAt(_player.transform.position);
