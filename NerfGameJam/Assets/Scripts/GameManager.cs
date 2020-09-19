@@ -45,9 +45,30 @@ public class GameManager : MonoBehaviour
         //Invoke("StartGame", 3f);
         //StartCoroutine(StartCountDown(3));
         tpsc = FindObjectOfType<TextParticleSystemController>();
+
+        _levelIndex = PlayerPrefs.GetInt("Level", 0);
+
+        LoadLevel(_levelIndex);
+
         GetSections(_levelIndex);
 
         //_player.transform.position = _chunks[_chunkIndex].transform.position - Vector3.forward * 5;
+    }
+
+    void LoadLevel(int levelIndex)
+    {
+        float dist = Vector3.Distance(_player.transform.position, _levels[levelIndex].transform.position);
+
+        for (int i = 0; i < _levels.Count; i++)
+        {
+            if (i != levelIndex)
+                _levels[i].SetActive(false);
+            else _levels[levelIndex].SetActive(true);
+
+            _levels[levelIndex].transform.position = Vector3.zero;
+            _player.transform.position = _levels[levelIndex].transform.position;
+            _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
     }
 
     public void StartGame()
@@ -151,6 +172,8 @@ public class GameManager : MonoBehaviour
 
         if (_gamePhase == GamePhase.isShooting)// || _gamePhase == GamePhase.isMoving)
         {
+
+            _player.transform.rotation = Quaternion.Euler(Vector3.zero);
             _startCountDownText.text = "Shoot!";
             
             if (Input.GetMouseButtonDown(0))
@@ -191,6 +214,7 @@ public class GameManager : MonoBehaviour
             {
                 _speed++;
             }*/
+            _player.transform.rotation = Quaternion.Euler(Vector3.zero);
 
             //IF PLAYER'S POSITION = CHUNK POSITION
             if (_player.transform.position == _chunks[_chunkIndex].transform.position - Vector3.forward * 5)//Vector3.forward * _sectionIndex * 10)
@@ -304,6 +328,9 @@ public class GameManager : MonoBehaviour
         _totalScore += _score;
         _score = 0;
         _levelIndex++;
+
+        PlayerPrefs.SetInt("Level", _levelIndex);
+
         _levels[_levelIndex - 1].gameObject.SetActive(false);
         _levels[_levelIndex].gameObject.SetActive(true);
         _levels[_levelIndex].transform.position = Vector3.zero;
