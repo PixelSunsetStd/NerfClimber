@@ -23,26 +23,26 @@ public class DisplayScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //_text.text = _gameManager._score.ToString() + " / " + _gameManager._chunkScores[1];
+        //_text.text = _gameManager._score.ToString() + " / " + _gameManager._levelScore[1];
 
-        if (_gameManager._score < _gameManager._chunkScores[0])
+        if (_gameManager._score < _gameManager._levelScore[0])
         {
-            _text.text = _gameManager._score.ToString() + " / " + _gameManager._chunkScores[0];
+            _text.text = _gameManager._score.ToString() + " / " + _gameManager._levelScore[0];
             _starsImg.sprite = _starsSprite[0];
         }
-        else if (_gameManager._score < _gameManager._chunkScores[1])
+        else if (_gameManager._score < _gameManager._levelScore[1])
         {
-            _text.text = _gameManager._score.ToString() + " / " + _gameManager._chunkScores[1];
+            _text.text = _gameManager._score.ToString() + " / " + _gameManager._levelScore[1];
             _starsImg.sprite = _starsSprite[1];
         }
-        else if (_gameManager._score < _gameManager._chunkScores[2])
+        else if (_gameManager._score < _gameManager._levelScore[2])
         {
-            _text.text = _gameManager._score.ToString() + " / " + _gameManager._chunkScores[2];
+            _text.text = _gameManager._score.ToString() + " / " + _gameManager._levelScore[2];
             _starsImg.sprite = _starsSprite[2];
         }
         else
         {
-            _text.text = _gameManager._score.ToString() + " / " + _gameManager._chunkScores[2];
+            _text.text = _gameManager._score.ToString() + " / " + _gameManager._levelScore[2];
             _starsImg.sprite = _starsSprite[3];
         }
 

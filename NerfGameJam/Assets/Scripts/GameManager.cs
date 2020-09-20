@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     public int _totalScore;
     public int _score;
-    public int[] _chunkScores;// = new int[3];
+    public int[] _levelScore;// = new int[3];
 
     public int _levelIndex;
     public int _sectionIndex;
@@ -95,16 +95,26 @@ public class GameManager : MonoBehaviour
     public void GetChunks(int index)
     {
         _chunks.Clear();
-        _chunkScores = new int[3];
+        _levelScore = new int[3];
         for (int i = 0; i < _sections[index].transform.childCount; i++)
         {
             if (_sections[index].transform.GetChild(i).GetComponent<LevelBehaviour>() != null)
             {
                 _chunks.Add(_sections[index].transform.GetChild(i).gameObject);
                 int numberOfTargets = _sections[index].transform.GetChild(i).GetComponent<LevelBehaviour>()._targets.Count;
-                _chunkScores[0] += numberOfTargets * 30;
-                _chunkScores[1] += numberOfTargets * 35;
-                _chunkScores[2] += numberOfTargets * 40;
+
+                if (_levelIndex < 12)
+                {
+                    _levelScore[0] += numberOfTargets * 20;
+                    _levelScore[1] += numberOfTargets * 30;
+                    _levelScore[2] += numberOfTargets * 40;
+                }
+                else
+                {
+                    _levelScore[0] += numberOfTargets * 30;
+                    _levelScore[1] += numberOfTargets * 35;
+                    _levelScore[2] += numberOfTargets * 40;
+                }
 
             }
         }
@@ -280,7 +290,7 @@ public class GameManager : MonoBehaviour
                     //START CHEERING ANIMATION
                     _player.transform.rotation = Quaternion.Euler(0, 180, 0);
 
-                    if (_score < _chunkScores[0])
+                    if (_score < _levelScore[0])
                     {
                         _player.GetComponent<Animator>().SetTrigger("Defeat");
                         _gamePhase = GamePhase.isWaiting;

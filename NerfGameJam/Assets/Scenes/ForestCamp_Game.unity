@@ -719,8 +719,8 @@ MonoBehaviour:
   _gamePhase: 0
   _totalScore: 0
   _score: 0
-  _chunkScores: 
-  _levelIndex: 2
+  _levelScore: 
+  _levelIndex: 11
   _sectionIndex: 1
   _chunkIndex: 0
   _levels:
@@ -1227,6 +1227,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163473452455004295, guid: 2a365d5010f9def4bbf25bdaae729539,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.9450073
       objectReference: {fileID: 0}
     - target: {fileID: 3163473453511115628, guid: 2a365d5010f9def4bbf25bdaae729539,
         type: 3}
