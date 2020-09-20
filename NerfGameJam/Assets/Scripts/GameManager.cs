@@ -182,8 +182,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PlayerPrefs.SetInt("Level", 0);
-            SceneManager.LoadScene(0);
+            if (_testLevelMode)
+            {
+                //PlayerPrefs.SetInt("Level", 0);
+                SceneManager.LoadScene(0); 
+            }else 
+                Application.Quit();
         }
 
         if (_gamePhase == GamePhase.isShooting)// || _gamePhase == GamePhase.isMoving)

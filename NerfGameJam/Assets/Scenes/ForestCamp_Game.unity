@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0c572a0522f1b14dbae1ede628681b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testLevelMode: 1
+  _testLevelMode: 0
   _player: {fileID: 8207998933121931370}
   _speed: 10
   _gamePhase: 0
