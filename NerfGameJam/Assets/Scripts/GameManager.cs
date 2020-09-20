@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
         while (time > 0)
         {
             _startCountDownText.text = time.ToString();
+            _startCountDownText.GetComponent<Animator>().SetTrigger("Bounce");
 
             yield return new WaitForSeconds(1f);
 
