@@ -403,7 +403,7 @@ public class GameManager : MonoBehaviour
 
         while (_trail.position != pos)
         {
-            _trail.position = Vector3.MoveTowards(_trail.position, pos, 1f);
+            _trail.position = Vector3.MoveTowards(_trail.position, pos, 50f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
     }
