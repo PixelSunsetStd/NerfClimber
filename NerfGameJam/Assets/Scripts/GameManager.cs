@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     public Transform _finalScorePanel;
 
+    public Transform _trail;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -198,11 +200,21 @@ public class GameManager : MonoBehaviour
             
             if (Input.GetMouseButtonDown(0))
             {
+                
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
 
+                
+
                 if (Physics.Raycast(ray, out hitInfo, 20f))
                 {
+                    _sfxAudioSource.clip = _audioClips[2];
+                    _sfxAudioSource.Play();
+
+                    StopCoroutine("Trail");
+                    StartCoroutine("Trail", hitInfo.point);
+
                     GameObject impactFX = Instantiate(_impactFX.gameObject, ray.origin, Quaternion.identity);
                     //colorPick
                     _impactFX.GetComponentInChildren<Debris>().Init(hitInfo.collider.GetComponentInChildren<Renderer>().material.color);
@@ -340,6 +352,7 @@ public class GameManager : MonoBehaviour
     public void TeleportPlayerToStartLevel()
     {
         _score = 0;
+        _player.GetComponent<Animator>().SetTrigger("Idle");
         _player.transform.position = _sections[_sectionIndex].transform.position - Vector3.forward * 5;
         StartCoroutine(StartCountDown(3));
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -369,6 +382,7 @@ public class GameManager : MonoBehaviour
         _levels[_levelIndex].transform.position = Vector3.zero;
         _player.transform.position = _levels[_levelIndex].transform.position;
         _player.transform.rotation = Quaternion.Euler(Vector3.zero);
+        _player.GetComponent<Animator>().SetTrigger("Idle");
         _levels[_levelIndex].gameObject.SetActive(true);
 
         _sectionIndex = 1;
@@ -377,5 +391,22 @@ public class GameManager : MonoBehaviour
         
         StartCoroutine(StartCountDown(3));
     }
+
+    IEnumerator Trail(Vector3 pos)
+    {
+        _trail.gameObject.SetActive(false);
+        _trail.position = _player.transform.position + Vector3.up + Vector3.forward;
+
+        yield return new WaitForEndOfFrame();
+
+        _trail.gameObject.SetActive(true);
+
+        while (_trail.position != pos)
+        {
+            _trail.position = Vector3.MoveTowards(_trail.position, pos, 1f);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    
 }
 
