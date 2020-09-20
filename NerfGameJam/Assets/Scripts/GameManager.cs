@@ -208,8 +208,8 @@ public class GameManager : MonoBehaviour
                     if (hitInfo.collider.GetComponent<Rigidbody>() != null)
                     {
                         hitInfo.collider.GetComponent<Rigidbody>().AddForce(ray.direction * 10f, ForceMode.Impulse);
-                        _score += 5;
-                        PlayPointsFX(hitInfo.point, 5);
+                        _score += 1;
+                        PlayPointsFX(hitInfo.point, 1);
                     }
 
                 }
