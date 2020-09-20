@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     public AudioSource _sfxAudioSource;
     public AudioClip[] _audioClips;
 
+    public Transform _finalScorePanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -276,6 +278,7 @@ public class GameManager : MonoBehaviour
                         _gamePhase = GamePhase.isWaiting;
                         Debug.Log("Victory");
                         _startCountDownText.text = "Congratulations!";
+                        _totalScore += _score;
 
                         if (_chunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true) != null)
                             _chunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true).gameObject.SetActive(true);
@@ -292,6 +295,12 @@ public class GameManager : MonoBehaviour
                             _nextLevelBtn.gameObject.SetActive(true);
                             _sfxAudioSource.clip = _audioClips[0];
                             _sfxAudioSource.Play();
+
+                            if (_levelIndex == _levels.Count - 1)
+                            {
+                                _finalScorePanel.GetComponentInChildren<Text>().text = _totalScore.ToString();
+                                _finalScorePanel.gameObject.SetActive(true);
+                            }
                         }
 
                     }
@@ -336,13 +345,15 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        _totalScore += _score;
         _score = 0;
         _levelIndex++;
         _levels[_levelIndex - 1].gameObject.SetActive(false);
 
         if (_levelIndex > _levels.Count - 1)
+        {
             _levelIndex = 0;
+            _totalScore = 0;
+        }
 
         PlayerPrefs.SetInt("Level", _levelIndex);
 
