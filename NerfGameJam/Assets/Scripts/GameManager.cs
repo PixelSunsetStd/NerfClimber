@@ -189,12 +189,12 @@ public class GameManager : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
 
-                if (Physics.Raycast(ray, out hitInfo, 15f))
+                if (Physics.Raycast(ray, out hitInfo, 20f))
                 {
                     GameObject impactFX = Instantiate(_impactFX.gameObject, ray.origin, Quaternion.identity);
                     //colorPick
                     _impactFX.GetComponentInChildren<Debris>().Init(hitInfo.collider.GetComponentInChildren<Renderer>().material.color);
-                    Debug.DrawRay(ray.origin, ray.direction * 15f);
+                    Debug.DrawRay(ray.origin, ray.direction * 20f);
                     _player.GetComponent<Animator>().SetTrigger("Fire");
                     impactFX.transform.position = hitInfo.point;
                     impactFX.transform.LookAt(_player.transform.position);
