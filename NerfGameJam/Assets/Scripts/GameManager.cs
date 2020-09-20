@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public bool _testLevelMode;
+
     public GameObject _player;
     public int _speed = 1;
 
@@ -48,7 +50,10 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(StartCountDown(3));
         tpsc = FindObjectOfType<TextParticleSystemController>();
 
-        _levelIndex = PlayerPrefs.GetInt("Level", 0);
+        if (!_testLevelMode)
+        {
+            _levelIndex = PlayerPrefs.GetInt("Level", 0); 
+        }
         if (_levelIndex > _levels.Count - 1)
             _levelIndex = 0;
 

@@ -5515,7 +5515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da7bb45127bacbd488ea808d35211b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundMaterial: {fileID: 2100000, guid: 120c2ee224fcc394d92b372cc7d19798, type: 2}
+  groundMaterial: {fileID: 2100000, guid: 5e0323cff0f71324d911658c811eeebf, type: 2}
 --- !u!1 &8563339328409757636
 GameObject:
   m_ObjectHideFlags: 0
