@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(StartCountDown(3));
         tpsc = FindObjectOfType<TextParticleSystemController>();
 
+        _totalScore = PlayerPrefs.GetInt("TotalScore", 0);
+
         if (!_testLevelMode)
         {
             _levelIndex = PlayerPrefs.GetInt("Level", 0); 
@@ -300,6 +302,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Victory");
                         _startCountDownText.text = "Congratulations!";
                         _totalScore += _score;
+                        PlayerPrefs.SetInt("TotalScore", _totalScore);
 
                         if (_chunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true) != null)
                             _chunks[_chunkIndex].GetComponentInChildren<ParticleSystem>(true).gameObject.SetActive(true);
@@ -321,6 +324,14 @@ public class GameManager : MonoBehaviour
                             {
                                 _finalScorePanel.GetComponentInChildren<Text>().text = _totalScore.ToString();
                                 _finalScorePanel.gameObject.SetActive(true);
+
+                                if (_totalScore > PlayerPrefs.GetInt("BestScore", 0))
+                                {
+                                    PlayerPrefs.SetInt("BestScore", _totalScore);
+                                    _startCountDownText.text = "New high score !";
+                                } else _startCountDownText.text = "Best Score : " + PlayerPrefs.GetInt("BestScore", 0);
+
+
                             }
                         }
 
