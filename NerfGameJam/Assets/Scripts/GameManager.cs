@@ -102,8 +102,8 @@ public class GameManager : MonoBehaviour
             {
                 _chunks.Add(_sections[index].transform.GetChild(i).gameObject);
                 int numberOfTargets = _sections[index].transform.GetChild(i).GetComponent<LevelBehaviour>()._targets.Count;
-                _chunkScores[0] += numberOfTargets * 20;
-                _chunkScores[1] += numberOfTargets * 30;
+                _chunkScores[0] += numberOfTargets * 30;
+                _chunkScores[1] += numberOfTargets * 35;
                 _chunkScores[2] += numberOfTargets * 40;
 
             }
@@ -386,6 +386,7 @@ public class GameManager : MonoBehaviour
         {
             _levelIndex = 0;
             _totalScore = 0;
+            PlayerPrefs.SetInt("TotalScore", _totalScore);
         }
 
         PlayerPrefs.SetInt("Level", _levelIndex);
