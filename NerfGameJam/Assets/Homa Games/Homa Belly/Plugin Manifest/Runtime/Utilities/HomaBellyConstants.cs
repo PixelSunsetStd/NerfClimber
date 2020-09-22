@@ -1,0 +1,12 @@
+﻿namespace HomaGames.HomaBelly.Utilities
+{
+    public static class HomaBellyConstants
+    {
+        public static string PRODUCT_NAME = "Homa Belly";
+        public static string PRODUCT_VERSION = "1.1.0";
+        public static string API_HOST = "https://damysus-engine.homagames.com";
+        //public static string API_HOST = "http://damysus-engine.oh.stage.homagames.com";
+        public static string API_VERSION = "V1";
+        public static string API_APP_BASE_URL = API_HOST + "/appbase?cv=" + API_VERSION + "&sv=" + PRODUCT_VERSION + "&ti={0}";
+    }
+}
